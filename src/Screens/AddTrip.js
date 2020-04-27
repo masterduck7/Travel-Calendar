@@ -1,82 +1,65 @@
 import React, { Component } from 'react';
-import { Text, View, StyleSheet, TouchableOpacity, ScrollView } from 'react-native';
+import { AsyncStorage, Text, View, StyleSheet, TouchableOpacity, ScrollView } from 'react-native';
 import { Input } from 'react-native-elements';
 import { Formik } from 'formik';
 
 export default class AddTrip extends Component{
-    constructor(props){
-      super(props)
-      this.state = {
-        originTrip : "",
-        destinationTrip: "",
-        start_date: "",
-        end_date: "",
-        airline: "",
-        reservationCode: ""
-      }
-    }    
+
     render(){
     return(
         <View style={styles.container}>
         <ScrollView>
             <Formik
-                onSubmit={()=> console.log("s")}
+                initialValues={{ origin: '', destination: '', start_date: '', end_date: '', airline: '', reservation: '' }}
+                onSubmit={values => {
+                    if (values.origin === '' || values.destination === '' || values.start_date === '' || values.end_date === '' || values.airline === '' || values.reservation === '') {
+                        alert("Favor llenar todos los campos")    
+                    } else {
+                        try {
+                            async () => { await AsyncStorage.setItem(values.destination + "-" + values.start_date, values);}
+                        } catch (error) {
+                            alert("Error al guardar viaje")
+                        }
+                    }
+                }}
             >
-            {({ handleSubmit}) => (
+            {({ handleChange, handleBlur, handleSubmit, values }) => (
                 <View style={{alignItems:'center'}}>
                 <Text style={{ paddingTop:10, color: '#888', fontSize: 20}}>Origen:</Text>
                 <Input
                     placeholder="Viaje IDA"
-                    onChange = {value => {
-                        this.setState({
-                            originTrip : value.nativeEvent.text
-                        })
-                    }}
+                    onChangeText={handleChange('origin')}
+                    value={values.origin}
                 />
                 <Text style={{ paddingTop:10, color: '#888', fontSize: 20}}>Destino:</Text>
                 <Input
                     placeholder="Viaje Vuelta"
-                    onChange = {value => {
-                        this.setState({
-                            destinationTrip : value.nativeEvent.text
-                        })
-                    }}
+                    onChangeText={handleChange('destination')}
+                    value={values.destination}
                 />
                 <Text style={{ paddingTop:10, color: '#888', fontSize: 20}}>Fecha inicio:</Text>
                 <Input
                     placeholder="F"
-                    onChange = {value => {
-                        this.setState({
-                            start_date : value.nativeEvent.text
-                        })
-                    }}
+                    onChangeText={handleChange('start_date')}
+                    value={values.start_date}
                 />
                 <Text style={{ paddingTop:10, color: '#888', fontSize: 20}}>Fecha Fin:</Text>
                 <Input
                     placeholder="FFF"
-                    onChange = {value => {
-                        this.setState({
-                            end_date : value.nativeEvent.text
-                        })
-                    }}
+                    onChangeText={handleChange('end_date')}
+                    value={values.end_date}
                 />
                 <Text style={{ paddingTop:10, color: '#888', fontSize: 20}}>Aerolinea:</Text>
                 <Input
                     placeholder="FFF"
-                    onChange = {value => {
-                        this.setState({
-                            airline : value.nativeEvent.text
-                        })
-                    }}
+                    onChangeText={handleChange('airline')}
+                    value={values.airline}
                 />
                 <Text style={{ paddingTop:10, color: '#888', fontSize: 20}}>Codigo Reserva:</Text>
                 <Input
                     placeholder="FFF"
-                    onChange = {value => {
-                        this.setState({
-                            reservationCode : value.nativeEvent.text
-                        })
-                    }}
+                    onChangeText={handleChange('reservation')}
+                    value={values.reservation}
                 />
                 <TouchableOpacity
                     onPress={handleSubmit}
