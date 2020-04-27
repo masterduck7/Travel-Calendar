@@ -6,7 +6,7 @@ export default class CalendarTravel extends Component {
 
     _retrieveData = async () => {
       try {
-        const value = await AsyncStorage.getItem('@Trip:key');
+        const value = await AsyncStorage.getItem('@Trips');
         if (value !== null) {
           console.log(value);
         }
