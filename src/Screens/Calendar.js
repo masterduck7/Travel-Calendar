@@ -1,8 +1,24 @@
 import {CalendarList} from 'react-native-calendars';
 import React, { Component } from 'react';
-import { View } from 'react-native';
+import { AsyncStorage, View } from 'react-native';
 
 export default class CalendarTravel extends Component {
+
+    _retrieveData = async () => {
+      try {
+        const value = await AsyncStorage.getItem('@Trip:key');
+        if (value !== null) {
+          console.log(value);
+        }
+      } catch (error) {
+        console.log("Error retrieving data")
+      }
+    };
+
+    componentDidMount(){
+      this._retrieveData()
+    }
+
     render(){
       const vacation_start = {key:'vacation_start', selected: true, startingDay: true, color: 'red', textColor: 'gray'};
       const vacation_end = {key:'vacation_end', selected: true, endingDay: true, color: 'red', textColor: 'gray'};
