@@ -1,18 +1,35 @@
-import {Calendar} from 'react-native-calendars';
+import {CalendarList} from 'react-native-calendars';
 import React, { Component } from 'react';
+import { View } from 'react-native';
 
 export default class CalendarTravel extends Component {
     render(){
+      const vacation_start = {key:'vacation_start', selected: true, startingDay: true, color: 'red', textColor: 'gray'};
+      const vacation_end = {key:'vacation_end', selected: true, endingDay: true, color: 'red', textColor: 'gray'};
+      const vacation_one = {key:'vacation_one', selected: true, startingDay: true, color: 'red', textColor: 'gray', endingDay: true};
+
       return(
-        <Calendar
+        <View>
+        <CalendarList
+            // Enable horizontal scrolling, default = false
+            horizontal={true}
+            // Enable paging on horizontal, default = false
+            pagingEnabled={true}
+            firstDay={1}
+            onDayPress={(day) => {console.log('selected day', day)}}
             markedDates={{
-                '2020-05-20': {textColor: 'green'},
-                '2020-05-22': {startingDay: true, color: 'green'},
-                '2020-05-23': {selected: true, endingDay: true, color: 'green', textColor: 'gray'},
-                '2020-05-04': {disabled: true, startingDay: true, color: 'green', endingDay: true}
+                '2020-05-22': vacation_start,
+                '2020-05-23': vacation_end,
+                '2020-05-04': vacation_one
             }}
             markingType={'period'}
+            theme={{
+              todayTextColor: '#00adf5',
+            }}
         />
+        
+
+        </View>
       );
     }
 }  

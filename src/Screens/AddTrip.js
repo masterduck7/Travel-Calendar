@@ -15,11 +15,7 @@ export default class AddTrip extends Component{
                     if (values.origin === '' || values.destination === '' || values.start_date === '' || values.end_date === '' || values.airline === '' || values.reservation === '') {
                         alert("Favor llenar todos los campos")    
                     } else {
-                        try {
-                            async () => { await AsyncStorage.setItem(values.destination + "-" + values.start_date, values);}
-                        } catch (error) {
-                            alert("Error al guardar viaje")
-                        }
+                        //Save Data
                     }
                 }}
             >
