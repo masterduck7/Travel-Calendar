@@ -3,6 +3,8 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 
 import Home from '../Screens/Home.js'
+import Calendar from '../Screens/Calendar.js'
+import AddTrip from '../Screens/AddTrip.js'
 
 const Stack = createStackNavigator();
 
@@ -16,6 +18,30 @@ function MainStackNavigator() {
             <Stack.Screen name='Home' component={Home}
             options={{
                 title: 'Inicio',
+                headerStyle: {
+                    backgroundColor: '#d1625a'
+                },
+                headerTintColor: '#fff',
+                headerTitleStyle: {
+                    fontWeight: 'bold'
+                },
+                headerTitleAlign:"center"
+            }}/>
+            <Stack.Screen name='Calendar' component={Calendar}
+            options={{
+                title: 'Calendario',
+                headerStyle: {
+                    backgroundColor: '#d1625a'
+                },
+                headerTintColor: '#fff',
+                headerTitleStyle: {
+                    fontWeight: 'bold'
+                },
+                headerTitleAlign:"center"
+            }}/>
+            <Stack.Screen name='AddTrip' component={AddTrip}
+            options={{
+                title: 'Añadir Viaje',
                 headerStyle: {
                     backgroundColor: '#d1625a'
                 },
