@@ -1,19 +1,6 @@
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import MainStackNavigator from './src/Navigation/MainStackNavigator.js'
 
 export default function App() {
-  return (
-    <View style={styles.container}>
-      <Text>Travel Calendar</Text>
-    </View>
-  );
+  return <MainStackNavigator />
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
