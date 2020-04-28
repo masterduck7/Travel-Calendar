@@ -1,7 +1,19 @@
 import React, { Component } from 'react';
-import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { AsyncStorage, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
 export default class Home extends Component {
+  componentDidMount(){
+    //this._clearData();
+  }
+
+  _clearData = async () => {
+    try {
+        await AsyncStorage.clear()
+    } catch (error) {
+        console.log("Error clearing data")
+    }
+  };
+
   render(){
     return(
       <View style={styles.container}>

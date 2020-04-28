@@ -5,6 +5,43 @@ import { Formik } from 'formik';
 
 export default class AddTrip extends Component{
 
+    constructor(props){
+        super(props);
+        this.state = {
+            userData : []
+        }
+    }
+
+    _retrieveData = async () => {
+        try {
+          const value = await AsyncStorage.getItem('@Trips');
+          if (value !== null) {
+            this.setState({
+                userData: value
+            })
+          }
+        } catch (error) {
+          console.log("Error retrieving data")
+        }
+    };
+
+    _storeData = async (values) => {
+        try {
+            await AsyncStorage.setItem('@Trips', JSON.stringify(values));
+        } catch (error) {
+            console.log("Error saving data")
+        }
+    };
+
+    _addData = async (values) => {
+        try {
+            await this._retrieveData()
+            await this._storeData([this.state.userData, JSON.stringify(values)])
+        } catch (error) {
+            console.log("ERROR")
+        }
+    }
+
     render(){
     return(
         <View style={styles.container}>
@@ -15,7 +52,7 @@ export default class AddTrip extends Component{
                     if (values.origin === '' || values.destination === '' || values.start_date === '' || values.end_date === '' || values.airline === '' || values.reservation === '') {
                         alert("Favor llenar todos los campos")    
                     } else {
-                        //Save Data
+                        {this._addData(values)}
                     }
                 }}
             >
