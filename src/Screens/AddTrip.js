@@ -38,7 +38,7 @@ export default class AddTrip extends Component{
             await this._retrieveData()
             await this._storeData([this.state.userData, JSON.stringify(values)])
         } catch (error) {
-            console.log("ERROR")
+            console.log("ERROR ADD DATA")
         }
     }
 
@@ -47,9 +47,9 @@ export default class AddTrip extends Component{
         <View style={styles.container}>
         <ScrollView>
             <Formik
-                initialValues={{ origin: '', destination: '', start_date: '', end_date: '', airline: '', reservation: '' }}
+                initialValues={{destination: '', start_date: '', end_date: '', airline: '', reservation: '' }}
                 onSubmit={values => {
-                    if (values.origin === '' || values.destination === '' || values.start_date === '' || values.end_date === '' || values.airline === '' || values.reservation === '') {
+                    if (values.destination === '' || values.start_date === '' || values.end_date === '' || values.airline === '' || values.reservation === '') {
                         alert("Favor llenar todos los campos")    
                     } else {
                         {this._addData(values)}
@@ -58,12 +58,6 @@ export default class AddTrip extends Component{
             >
             {({ handleChange, handleBlur, handleSubmit, values }) => (
                 <View style={{alignItems:'center'}}>
-                <Text style={{ paddingTop:10, color: '#888', fontSize: 20}}>Origen:</Text>
-                <Input
-                    placeholder="Viaje IDA"
-                    onChangeText={handleChange('origin')}
-                    value={values.origin}
-                />
                 <Text style={{ paddingTop:10, color: '#888', fontSize: 20}}>Destino:</Text>
                 <Input
                     placeholder="Viaje Vuelta"
