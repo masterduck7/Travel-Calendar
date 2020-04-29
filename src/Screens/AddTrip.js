@@ -8,8 +8,12 @@ export default class AddTrip extends Component{
     constructor(props){
         super(props);
         this.state = {
-            userData : []
+            userData : Array()
         }
+    }
+
+    componentDidMount = async () => {
+        this._retrieveData()
     }
 
     _retrieveData = async () => {
@@ -17,7 +21,7 @@ export default class AddTrip extends Component{
           const value = await AsyncStorage.getItem('@Trips');
           if (value !== null) {
             this.setState({
-                userData: value
+                userData: JSON.parse(value)
             })
           }
         } catch (error) {
@@ -33,15 +37,6 @@ export default class AddTrip extends Component{
         }
     };
 
-    _addData = async (values) => {
-        try {
-            await this._retrieveData()
-            await this._storeData([this.state.userData, JSON.stringify(values)])
-        } catch (error) {
-            console.log("ERROR ADD DATA")
-        }
-    }
-
     render(){
     return(
         <View style={styles.container}>
@@ -52,7 +47,18 @@ export default class AddTrip extends Component{
                     if (values.destination === '' || values.start_date === '' || values.end_date === '' || values.airline === '' || values.reservation === '') {
                         alert("Favor llenar todos los campos")    
                     } else {
-                        {this._addData(values)}
+                        let data = this.state.userData
+                        let newData = new Array()
+                        if (data.length > 0) {
+                            Array.from(data, child => {
+                                newData.push(child)
+                            });
+                            newData.push(values)
+                        }else{
+                            newData.push(values)
+                        }
+                        console.log(newData)
+                        {this._storeData(newData)}
                     }
                 }}
             >

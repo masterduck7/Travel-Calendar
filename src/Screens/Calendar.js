@@ -36,25 +36,6 @@ export default class CalendarTravel extends Component {
       }
     };
 
-    cleanData(data){
-      let trips = []
-      let markedTrips = []
-      data.forEach(trip => {
-        trips.push(JSON.parse(trip))
-      });
-      trips.forEach(trip => {
-        tripData = {
-          destination: trip.destination,
-          start_date: trip.start_date,
-          end_date: trip.end_date,
-          airline: trip.airline,
-          reservationCode: trip.reservationCode
-        }
-        markedTrips.push(tripData)
-      })
-      return markedTrips
-    }
-
     componentDidMount = async () => {
       this._retrieveData()
     }
@@ -62,11 +43,9 @@ export default class CalendarTravel extends Component {
     showData(day){
       if (this.state.tripsData !== []) {
         let data = JSON.parse(this.state.tripsData)
-        console.log(data.length)
         let parseData = []
         for (let index = 0; index < data.length; index++) {
           parseData.push(data[index])
-          console.log(data[index])
         }
         this.setState({
           actualTrip: {
@@ -77,6 +56,8 @@ export default class CalendarTravel extends Component {
             reservationCode: day.day
           }
         })  
+      }else{
+        console.log("NO DATA")
       }
     }
 
