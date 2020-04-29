@@ -2,10 +2,6 @@ import React, { Component } from 'react';
 import { AsyncStorage, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
 export default class Home extends Component {
-  componentDidMount(){
-    //this._clearData();
-  }
-
   _clearData = async () => {
     try {
         await AsyncStorage.clear()
@@ -27,6 +23,11 @@ export default class Home extends Component {
           onPress={() => this.props.navigation.navigate('AddTrip')}
           style={{...styles.button, top: 90 }}>
           <Text style={styles.text}>Añadir Viaje</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          onPress={() => this._clearData()}
+          style={{...styles.button, top: 150 }}>
+          <Text style={styles.text}>Borrar datos</Text>
         </TouchableOpacity>
         <Text style={{ bottom:-200, color: '#888'}}>By LPSoftware</Text>
       </View>

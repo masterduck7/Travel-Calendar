@@ -8,8 +8,12 @@ export default class AddTrip extends Component{
     constructor(props){
         super(props);
         this.state = {
-            userData : []
+            userData : Array()
         }
+    }
+
+    componentDidMount = async () => {
+        this._retrieveData()
     }
 
     _retrieveData = async () => {
@@ -17,7 +21,7 @@ export default class AddTrip extends Component{
           const value = await AsyncStorage.getItem('@Trips');
           if (value !== null) {
             this.setState({
-                userData: value
+                userData: JSON.parse(value)
             })
           }
         } catch (error) {
@@ -33,66 +37,61 @@ export default class AddTrip extends Component{
         }
     };
 
-    _addData = async (values) => {
-        try {
-            await this._retrieveData()
-            await this._storeData([this.state.userData, JSON.stringify(values)])
-        } catch (error) {
-            console.log("ERROR")
-        }
-    }
-
     render(){
     return(
         <View style={styles.container}>
         <ScrollView>
             <Formik
-                initialValues={{ origin: '', destination: '', start_date: '', end_date: '', airline: '', reservation: '' }}
+                initialValues={{destination: '', start_date: '', end_date: '', airline: '', reservationCode: '' }}
                 onSubmit={values => {
-                    if (values.origin === '' || values.destination === '' || values.start_date === '' || values.end_date === '' || values.airline === '' || values.reservation === '') {
+                    if (values.destination === '' || values.start_date === '' || values.end_date === '' || values.airline === '' || values.reservationCode === '') {
                         alert("Favor llenar todos los campos")    
                     } else {
-                        {this._addData(values)}
+                        let data = this.state.userData
+                        let newData = new Array()
+                        if (data.length > 0) {
+                            Array.from(data, child => {
+                                newData.push(child)
+                            });
+                            newData.push(values)
+                        }else{
+                            newData.push(values)
+                        }
+                        {this._storeData(newData)}
                     }
                 }}
             >
             {({ handleChange, handleBlur, handleSubmit, values }) => (
                 <View style={{alignItems:'center'}}>
-                <Text style={{ paddingTop:10, color: '#888', fontSize: 20}}>Origen:</Text>
-                <Input
-                    placeholder="Viaje IDA"
-                    onChangeText={handleChange('origin')}
-                    value={values.origin}
-                />
                 <Text style={{ paddingTop:10, color: '#888', fontSize: 20}}>Destino:</Text>
                 <Input
-                    placeholder="Viaje Vuelta"
+                    placeholder="Destino"
                     onChangeText={handleChange('destination')}
                     value={values.destination}
                 />
                 <Text style={{ paddingTop:10, color: '#888', fontSize: 20}}>Fecha inicio:</Text>
                 <Input
-                    placeholder="F"
+                    placeholder="Inicio viaje"
                     onChangeText={handleChange('start_date')}
                     value={values.start_date}
                 />
                 <Text style={{ paddingTop:10, color: '#888', fontSize: 20}}>Fecha Fin:</Text>
                 <Input
-                    placeholder="FFF"
+                    placeholder="Fin viaje"
                     onChangeText={handleChange('end_date')}
                     value={values.end_date}
                 />
                 <Text style={{ paddingTop:10, color: '#888', fontSize: 20}}>Aerolinea:</Text>
                 <Input
-                    placeholder="FFF"
+                    placeholder="Aerolinea"
                     onChangeText={handleChange('airline')}
                     value={values.airline}
                 />
                 <Text style={{ paddingTop:10, color: '#888', fontSize: 20}}>Codigo Reserva:</Text>
                 <Input
-                    placeholder="FFF"
-                    onChangeText={handleChange('reservation')}
-                    value={values.reservation}
+                    placeholder="Reserva"
+                    onChangeText={handleChange('reservationCode')}
+                    value={values.reservationCode}
                 />
                 <TouchableOpacity
                     onPress={handleSubmit}
