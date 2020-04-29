@@ -24,13 +24,8 @@ export default class CalendarTravel extends Component {
 
     _retrieveData = async () => {
       try {
-        let trips = []
-        const value = await AsyncStorage.getItem('@Trips');
-        if (value !== null) {
-          this.setState({
-            tripsData: value
-          })
-        }
+        const data = await AsyncStorage.getItem('@Trips');      
+        this.formatData(JSON.parse(data))
       } catch (error) {
         console.log("Error retrieving data")
       }
@@ -59,7 +54,7 @@ export default class CalendarTravel extends Component {
 
     showData(day){
       if (this.state.tripsData !== []) {
-        let sTrip = this.findDate(day.dateString, JSON.parse(this.state.tripsData))
+        let sTrip = this.findDate(day.dateString, this.state.tripsData)
         if (sTrip.length !== 0) {
           this.setState({
             actualTrip: {
@@ -84,12 +79,10 @@ export default class CalendarTravel extends Component {
       }else{
         console.log("NO DATA")
       }
-      this.formatData()
     }
 
-    formatData(){
+    formatData(data){
       let newData = []
-      const data = JSON.parse(this.state.tripsData)
       const vacation_start = {key:'vacation_start', selected: true, startingDay: true, color: 'red', textColor: 'gray'};
       const vacation_end = {key:'vacation_end', selected: true, endingDay: true, color: 'red', textColor: 'gray'};
       const vacation_one = {key:'vacation_one', selected: true, startingDay: true, color: 'red', textColor: 'gray', endingDay: true};
@@ -110,7 +103,8 @@ export default class CalendarTravel extends Component {
         }
       })
       this.setState({
-        formatedTrips: newData
+        formatedTrips: newData,
+        tripsData: data
       })
     }
 
