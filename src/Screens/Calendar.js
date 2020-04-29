@@ -82,7 +82,7 @@ export default class CalendarTravel extends Component {
     }
 
     formatData(data){
-      let newData = []
+      let newData = {}
       const vacation_start = {key:'vacation_start', selected: true, startingDay: true, color: 'red', textColor: 'gray'};
       const vacation_end = {key:'vacation_end', selected: true, endingDay: true, color: 'red', textColor: 'gray'};
       const vacation_one = {key:'vacation_one', selected: true, startingDay: true, color: 'red', textColor: 'gray', endingDay: true};
@@ -90,16 +90,10 @@ export default class CalendarTravel extends Component {
         let sd = child.start_date
         let ed = child.end_date
         if (sd === ed) {
-          var obj = {};
-          obj[sd] = vacation_one;
-          newData.push(obj)
+          newData[sd] = vacation_one;
         }else{
-          var obj = {};
-          obj[sd] = vacation_start;
-          var obj2 = {}
-          obj2[ed] = vacation_end;
-          newData.push(obj)
-          newData.push(obj2)
+          newData[sd] = vacation_start;
+          newData[ed] = vacation_end;
         }
       })
       this.setState({
@@ -122,11 +116,7 @@ export default class CalendarTravel extends Component {
             pagingEnabled={true}
             firstDay={1}
             onDayPress={(day) => {this.showData(day)}}
-            markedDates={{
-                '2020-05-22': vacation_start,
-                '2020-05-23': vacation_end,
-                '2020-05-04': vacation_one
-            }}
+            markedDates={this.state.formatedTrips}
             markingType={'period'}
             theme={{
               todayTextColor: '#00adf5',
