@@ -9,7 +9,7 @@ export default class CalendarTravel extends Component {
       super(props);
       this.state = {
         tripsData : [],
-        cleanedTrips: [],
+        formatedTrips: [],
         // Actual Trip to show details
         // Destination, Start date, End date, Airline, Reservation code
         actualTrip: {
@@ -69,7 +69,7 @@ export default class CalendarTravel extends Component {
               airline: sTrip.airline,
               reservationCode: sTrip.reservationCode
             }
-          }) 
+          })
         }else{
           this.setState({
             actualTrip: {
@@ -84,6 +84,34 @@ export default class CalendarTravel extends Component {
       }else{
         console.log("NO DATA")
       }
+      this.formatData()
+    }
+
+    formatData(){
+      let newData = []
+      const data = JSON.parse(this.state.tripsData)
+      const vacation_start = {key:'vacation_start', selected: true, startingDay: true, color: 'red', textColor: 'gray'};
+      const vacation_end = {key:'vacation_end', selected: true, endingDay: true, color: 'red', textColor: 'gray'};
+      const vacation_one = {key:'vacation_one', selected: true, startingDay: true, color: 'red', textColor: 'gray', endingDay: true};
+      Array.from(data, child => {
+        let sd = child.start_date
+        let ed = child.end_date
+        if (sd === ed) {
+          var obj = {};
+          obj[sd] = vacation_one;
+          newData.push(obj)
+        }else{
+          var obj = {};
+          obj[sd] = vacation_start;
+          var obj2 = {}
+          obj2[ed] = vacation_end;
+          newData.push(obj)
+          newData.push(obj2)
+        }
+      })
+      this.setState({
+        formatedTrips: newData
+      })
     }
 
     render(){
