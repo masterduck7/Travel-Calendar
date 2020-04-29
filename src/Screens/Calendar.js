@@ -13,7 +13,7 @@ export default class CalendarTravel extends Component {
         // Actual Trip to show details
         // Destination, Start date, End date, Airline, Reservation code
         actualTrip: {
-          destination: '',
+          destination: 'DESTINO',
           start_date: '',
           end_date: '',
           airline: '',
@@ -60,7 +60,7 @@ export default class CalendarTravel extends Component {
     showData(day){
       if (this.state.tripsData !== []) {
         let sTrip = this.findDate(day.dateString, JSON.parse(this.state.tripsData))
-        if (sTrip !== []) {
+        if (sTrip.length !== 0) {
           this.setState({
             actualTrip: {
               destination: sTrip.destination,
@@ -68,6 +68,16 @@ export default class CalendarTravel extends Component {
               end_date: sTrip.end_date,
               airline: sTrip.airline,
               reservationCode: sTrip.reservationCode
+            }
+          }) 
+        }else{
+          this.setState({
+            actualTrip: {
+              destination: 'DESTINO',
+              start_date: '',
+              end_date: '',
+              airline: '',
+              reservationCode: ''
             }
           }) 
         }
@@ -100,8 +110,8 @@ export default class CalendarTravel extends Component {
               todayTextColor: '#00adf5',
             }}
         />
-        <Card
-          title="{this.state.actualTrip.destination}">
+        <Card 
+          title={<Text style={{textAlign:'center'}}>{this.state.actualTrip.destination}</Text>}>
           <Text style={{marginBottom: 10}}>START DATE: {this.state.actualTrip.start_date}</Text>
           <Text style={{marginBottom: 10}}>END DATE: {this.state.actualTrip.end_date}</Text>
           <Text style={{marginBottom: 10}}>AIRLINE: {this.state.actualTrip.airline}</Text>
