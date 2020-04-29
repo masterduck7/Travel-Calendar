@@ -42,9 +42,9 @@ export default class AddTrip extends Component{
         <View style={styles.container}>
         <ScrollView>
             <Formik
-                initialValues={{destination: '', start_date: '', end_date: '', airline: '', reservation: '' }}
+                initialValues={{destination: '', start_date: '', end_date: '', airline: '', reservationCode: '' }}
                 onSubmit={values => {
-                    if (values.destination === '' || values.start_date === '' || values.end_date === '' || values.airline === '' || values.reservation === '') {
+                    if (values.destination === '' || values.start_date === '' || values.end_date === '' || values.airline === '' || values.reservationCode === '') {
                         alert("Favor llenar todos los campos")    
                     } else {
                         let data = this.state.userData
@@ -65,33 +65,33 @@ export default class AddTrip extends Component{
                 <View style={{alignItems:'center'}}>
                 <Text style={{ paddingTop:10, color: '#888', fontSize: 20}}>Destino:</Text>
                 <Input
-                    placeholder="Viaje Vuelta"
+                    placeholder="Destino"
                     onChangeText={handleChange('destination')}
                     value={values.destination}
                 />
                 <Text style={{ paddingTop:10, color: '#888', fontSize: 20}}>Fecha inicio:</Text>
                 <Input
-                    placeholder="F"
+                    placeholder="Inicio viaje"
                     onChangeText={handleChange('start_date')}
                     value={values.start_date}
                 />
                 <Text style={{ paddingTop:10, color: '#888', fontSize: 20}}>Fecha Fin:</Text>
                 <Input
-                    placeholder="FFF"
+                    placeholder="Fin viaje"
                     onChangeText={handleChange('end_date')}
                     value={values.end_date}
                 />
                 <Text style={{ paddingTop:10, color: '#888', fontSize: 20}}>Aerolinea:</Text>
                 <Input
-                    placeholder="FFF"
+                    placeholder="Aerolinea"
                     onChangeText={handleChange('airline')}
                     value={values.airline}
                 />
                 <Text style={{ paddingTop:10, color: '#888', fontSize: 20}}>Codigo Reserva:</Text>
                 <Input
-                    placeholder="FFF"
-                    onChangeText={handleChange('reservation')}
-                    value={values.reservation}
+                    placeholder="Reserva"
+                    onChangeText={handleChange('reservationCode')}
+                    value={values.reservationCode}
                 />
                 <TouchableOpacity
                     onPress={handleSubmit}

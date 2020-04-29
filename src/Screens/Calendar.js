@@ -83,9 +83,9 @@ export default class CalendarTravel extends Component {
 
     formatData(data){
       let newData = {}
-      const vacation_start = {key:'vacation_start', selected: true, startingDay: true, color: 'red', textColor: 'gray'};
-      const vacation_end = {key:'vacation_end', selected: true, endingDay: true, color: 'red', textColor: 'gray'};
-      const vacation_one = {key:'vacation_one', selected: true, startingDay: true, color: 'red', textColor: 'gray', endingDay: true};
+      const vacation_start = {startingDay: true, color: 'red', textColor: 'gray'};
+      const vacation_end = {endingDay: true, color: 'red', textColor: 'gray'};
+      const vacation_one = {startingDay: true, color: 'green', endingDay: true, textColor: 'gray'};
       Array.from(data, child => {
         let sd = child.start_date
         let ed = child.end_date
@@ -103,10 +103,6 @@ export default class CalendarTravel extends Component {
     }
 
     render(){
-      const vacation_start = {key:'vacation_start', selected: true, startingDay: true, color: 'red', textColor: 'gray'};
-      const vacation_end = {key:'vacation_end', selected: true, endingDay: true, color: 'red', textColor: 'gray'};
-      const vacation_one = {key:'vacation_one', selected: true, startingDay: true, color: 'red', textColor: 'gray', endingDay: true};
-
       return(
         <View>
         <CalendarList
