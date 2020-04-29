@@ -40,22 +40,37 @@ export default class CalendarTravel extends Component {
       this._retrieveData()
     }
 
+    findDate(day, data){
+      let selectedTrip = []
+      Array.from(data, child => {
+        const compare = (child.start_date === day )
+        if (compare) {
+          selectedTrip = {
+            destination: child.destination,
+            start_date: child.start_date,
+            end_date: child.end_date,
+            airline: child.airline,
+            reservationCode: child.reservationCode
+          }
+        }
+      });
+      return selectedTrip
+    }
+
     showData(day){
       if (this.state.tripsData !== []) {
-        let data = JSON.parse(this.state.tripsData)
-        let parseData = []
-        for (let index = 0; index < data.length; index++) {
-          parseData.push(data[index])
+        let sTrip = this.findDate(day.dateString, JSON.parse(this.state.tripsData))
+        if (sTrip !== []) {
+          this.setState({
+            actualTrip: {
+              destination: sTrip.destination,
+              start_date: sTrip.start_date,
+              end_date: sTrip.end_date,
+              airline: sTrip.airline,
+              reservationCode: sTrip.reservationCode
+            }
+          }) 
         }
-        this.setState({
-          actualTrip: {
-            destination: day.day,
-            start_date: day.day,
-            end_date: day.day,
-            airline: day.day,
-            reservationCode: day.day
-          }
-        })  
       }else{
         console.log("NO DATA")
       }

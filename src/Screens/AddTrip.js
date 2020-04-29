@@ -57,7 +57,6 @@ export default class AddTrip extends Component{
                         }else{
                             newData.push(values)
                         }
-                        console.log(newData)
                         {this._storeData(newData)}
                     }
                 }}
