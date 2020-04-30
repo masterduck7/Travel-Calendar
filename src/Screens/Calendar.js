@@ -2,6 +2,7 @@ import {CalendarList} from 'react-native-calendars';
 import React, { Component } from 'react';
 import { AsyncStorage, View, Text } from 'react-native';
 import { Card, Button, Icon } from 'react-native-elements'
+import moment from 'moment';
 
 export default class CalendarTravel extends Component {
 
@@ -24,8 +25,10 @@ export default class CalendarTravel extends Component {
 
     _retrieveData = async () => {
       try {
-        const data = await AsyncStorage.getItem('@Trips');      
-        this.formatData(JSON.parse(data))
+        const data = await AsyncStorage.getItem('@Trips');
+        if (data) {
+          await this.formatData(JSON.parse(data))
+        }
       } catch (error) {
         console.log("Error retrieving data")
       }
@@ -81,11 +84,23 @@ export default class CalendarTravel extends Component {
       }
     }
 
-    formatData(data){
+    getAllDaysBetween(startd, endt){
+      let dateArray = [];
+      let start = moment(startd).add(1, 'days');
+      let stop = moment(endt);
+      while (start < stop) {
+          dateArray.push( moment(start).format('YYYY-MM-DD') )
+          start = moment(start).add(1, 'days');
+      }
+      return dateArray;
+    }
+
+    formatData = async (data) => {
       let newData = {}
-      const vacation_start = {startingDay: true, color: 'red', textColor: 'gray'};
-      const vacation_end = {endingDay: true, color: 'red', textColor: 'gray'};
-      const vacation_one = {startingDay: true, color: 'green', endingDay: true, textColor: 'gray'};
+      const vacation_start = {startingDay: true, color: '#FD2F40', textColor: 'white'};
+      const vacation_end = {endingDay: true, color: '#FD2F40', textColor: 'white'};
+      const vacation_between = {color:'#969696', textColor: 'white'};
+      const vacation_one = {startingDay: true, color: '#FD2F40', endingDay: true, textColor: 'white'};
       Array.from(data, child => {
         let sd = child.start_date
         let ed = child.end_date
@@ -93,6 +108,10 @@ export default class CalendarTravel extends Component {
           newData[sd] = vacation_one;
         }else{
           newData[sd] = vacation_start;
+          let daysBetween = this.getAllDaysBetween(sd,ed)
+          for (let i = 0; i < daysBetween.length; i++) {
+            newData[daysBetween[i]] = vacation_between;
+          }
           newData[ed] = vacation_end;
         }
       })
@@ -106,24 +125,29 @@ export default class CalendarTravel extends Component {
       return(
         <View>
         <CalendarList
-            // Enable horizontal scrolling, default = false
             horizontal={true}
-            // Enable paging on horizontal, default = false
             pagingEnabled={true}
             firstDay={1}
             onDayPress={(day) => {this.showData(day)}}
             markedDates={this.state.formatedTrips}
             markingType={'period'}
             theme={{
-              todayTextColor: '#00adf5',
+              'stylesheet.day.period': {
+                base: {
+                  overflow: 'hidden',
+                  height: 34,
+                  alignItems: 'center',
+                  width: 38,
+                }
+              }
             }}
         />
         <Card 
-          title={<Text style={{textAlign:'center'}}>{this.state.actualTrip.destination}</Text>}>
-          <Text style={{marginBottom: 10}}>START DATE: {this.state.actualTrip.start_date}</Text>
-          <Text style={{marginBottom: 10}}>END DATE: {this.state.actualTrip.end_date}</Text>
-          <Text style={{marginBottom: 10}}>AIRLINE: {this.state.actualTrip.airline}</Text>
-          <Text style={{marginBottom: 10}}>RESERVATION CODE: {this.state.actualTrip.reservationCode}</Text>
+          title={<Text style={{textAlign:'center', paddingBottom: 15, fontSize: 20}}>{this.state.actualTrip.destination}</Text>}>
+          <Text style={{marginBottom: 10}}>INICIO: {this.state.actualTrip.start_date}</Text>
+          <Text style={{marginBottom: 10}}>TERMINO: {this.state.actualTrip.end_date}</Text>
+          <Text style={{marginBottom: 10}}>AEROLINEA: {this.state.actualTrip.airline}</Text>
+          <Text style={{marginBottom: 10}}>RESERVA: {this.state.actualTrip.reservationCode}</Text>
           <Button
             buttonStyle={{borderRadius: 0, marginLeft: 0, marginRight: 0, marginBottom: 0}}
             title='CHECK RESERVATION' />
