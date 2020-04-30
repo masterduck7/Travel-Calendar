@@ -1,7 +1,7 @@
 import {CalendarList} from 'react-native-calendars';
 import React, { Component } from 'react';
-import { AsyncStorage, View, Text } from 'react-native';
-import { Card, Button, Icon } from 'react-native-elements'
+import { AsyncStorage, View, Text, Linking  } from 'react-native';
+import { Card, Button } from 'react-native-elements'
 import moment from 'moment';
 
 export default class CalendarTravel extends Component {
@@ -19,7 +19,8 @@ export default class CalendarTravel extends Component {
           end_date: '',
           airline: '',
           reservationCode: ''
-        }
+        },
+        actualAirline: ''
       }
     }
 
@@ -41,7 +42,7 @@ export default class CalendarTravel extends Component {
     findDate(day, data){
       let selectedTrip = []
       Array.from(data, child => {
-        const compare = (child.start_date === day )
+        const compare = (child.start_date === day || child.end_date === day )
         if (compare) {
           selectedTrip = {
             destination: child.destination,
@@ -59,6 +60,19 @@ export default class CalendarTravel extends Component {
       if (this.state.tripsData !== []) {
         let sTrip = this.findDate(day.dateString, this.state.tripsData)
         if (sTrip.length !== 0) {
+          let airline = ''
+          if (sTrip.airline === "Jetsmart") {
+            airline = 'https://www.jetsmart.cl'
+          }
+          else if (sTrip.airline === "Latam"){
+            airline = "https://www.latam.cl"
+          }
+          else if (sTrip.airline === "Sky Airlines"){
+            airline = "https://www.latam.cl"
+          }
+          else{
+            airline = "https://www.google.com/search?q=" + sTrip.airline
+          }
           this.setState({
             actualTrip: {
               destination: sTrip.destination,
@@ -66,7 +80,8 @@ export default class CalendarTravel extends Component {
               end_date: sTrip.end_date,
               airline: sTrip.airline,
               reservationCode: sTrip.reservationCode
-            }
+            },
+            actualAirline: airline
           })
         }else{
           this.setState({
@@ -149,6 +164,7 @@ export default class CalendarTravel extends Component {
           <Text style={{marginBottom: 10}}>AEROLINEA: {this.state.actualTrip.airline}</Text>
           <Text style={{marginBottom: 10}}>RESERVA: {this.state.actualTrip.reservationCode}</Text>
           <Button
+            onPress={() => Linking.openURL(this.state.actualAirline)}
             buttonStyle={{borderRadius: 0, marginLeft: 0, marginRight: 0, marginBottom: 0}}
             title='CHECK RESERVATION' />
         </Card>
