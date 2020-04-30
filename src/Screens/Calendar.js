@@ -115,7 +115,6 @@ export default class CalendarTravel extends Component {
           newData[ed] = vacation_end;
         }
       })
-      console.log(typeof(newData))
       this.setState({
         formatedTrips: newData,
         tripsData: data
@@ -126,9 +125,7 @@ export default class CalendarTravel extends Component {
       return(
         <View>
         <CalendarList
-            // Enable horizontal scrolling, default = false
             horizontal={true}
-            // Enable paging on horizontal, default = false
             pagingEnabled={true}
             firstDay={1}
             onDayPress={(day) => {this.showData(day)}}
