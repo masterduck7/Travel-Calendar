@@ -42,7 +42,7 @@ export default class CalendarTravel extends Component {
     findDate(day, data){
       let selectedTrip = []
       Array.from(data, child => {
-        const compare = (child.start_date === day )
+        const compare = (child.start_date === day || child.end_date === day )
         if (compare) {
           selectedTrip = {
             destination: child.destination,
