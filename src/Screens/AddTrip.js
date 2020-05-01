@@ -61,6 +61,7 @@ export default class AddTrip extends Component{
                             newData.push(values)
                         }
                         {this._storeData(newData)}
+                        {this.props.navigation.navigate('Home')}
                     }
                 }}
             >
