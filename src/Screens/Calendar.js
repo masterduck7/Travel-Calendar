@@ -17,6 +17,8 @@ export default class CalendarTravel extends Component {
           destination: 'DESTINO',
           start_date: '',
           end_date: '',
+          startTime: '',
+          endTime: '',
           airline: '',
           reservationCode: ''
         },
@@ -49,6 +51,8 @@ export default class CalendarTravel extends Component {
             destination: child.destination,
             start_date: child.start_date,
             end_date: child.end_date,
+            startTime: child.startTime,
+            endTime: child.endTime,
             airline: child.airline,
             reservationCode: child.reservationCode
           }
@@ -79,6 +83,8 @@ export default class CalendarTravel extends Component {
               destination: sTrip.destination,
               start_date: sTrip.start_date,
               end_date: sTrip.end_date,
+              startTime: sTrip.startTime,
+              endTime: sTrip.endTime,
               airline: sTrip.airline,
               reservationCode: sTrip.reservationCode
             },
@@ -139,8 +145,8 @@ export default class CalendarTravel extends Component {
           <View style = {styles.modal}>  
             <Card containerStyle={{width: '93%', borderRadius:20, borderWidth: 1 }}
               title={<Text style={{textAlign:'center', paddingBottom: 15, fontSize: 20}}>{this.state.actualTrip.destination}</Text>}>
-              <Text style={{marginBottom: 10}}>INICIO: {this.state.actualTrip.start_date}</Text>
-              <Text style={{marginBottom: 10}}>TERMINO: {this.state.actualTrip.end_date}</Text>
+              <Text style={{marginBottom: 10}}>INICIO: {this.state.actualTrip.start_date} {this.state.actualTrip.startTime}</Text>
+              <Text style={{marginBottom: 10}}>TERMINO: {this.state.actualTrip.end_date} {this.state.actualTrip.endTime}</Text>
               <Text style={{marginBottom: 10}}>AEROLINEA: {this.state.actualTrip.airline}</Text>
               <Text style={{marginBottom: 10}}>RESERVA: {this.state.actualTrip.reservationCode}</Text>
               <Button
