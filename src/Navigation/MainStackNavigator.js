@@ -19,7 +19,7 @@ function MainStackNavigator() {
             options={{
                 title: 'Inicio',
                 headerStyle: {
-                    backgroundColor: '#d1625a'
+                    backgroundColor: '#2F496E'
                 },
                 headerTintColor: '#fff',
                 headerTitleStyle: {
@@ -31,7 +31,7 @@ function MainStackNavigator() {
             options={{
                 title: 'Calendario',
                 headerStyle: {
-                    backgroundColor: '#d1625a'
+                    backgroundColor: '#2F496E'
                 },
                 headerTintColor: '#fff',
                 headerTitleStyle: {
@@ -43,7 +43,7 @@ function MainStackNavigator() {
             options={{
                 title: 'Añadir Viaje',
                 headerStyle: {
-                    backgroundColor: '#d1625a'
+                    backgroundColor: '#2F496E'
                 },
                 headerTintColor: '#fff',
                 headerTitleStyle: {

@@ -1,6 +1,6 @@
 import {CalendarList} from 'react-native-calendars';
 import React, { Component } from 'react';
-import { AsyncStorage, View, Text, Linking  } from 'react-native';
+import { AsyncStorage, View, Text, Linking, Modal, StyleSheet } from 'react-native';
 import { Card, Button } from 'react-native-elements'
 import moment from 'moment';
 
@@ -20,7 +20,8 @@ export default class CalendarTravel extends Component {
           airline: '',
           reservationCode: ''
         },
-        actualAirline: ''
+        actualAirline: '',
+        modalActive: false
       }
     }
 
@@ -81,18 +82,9 @@ export default class CalendarTravel extends Component {
               airline: sTrip.airline,
               reservationCode: sTrip.reservationCode
             },
-            actualAirline: airline
+            actualAirline: airline,
+            modalActive: !this.state.modalActive
           })
-        }else{
-          this.setState({
-            actualTrip: {
-              destination: 'DESTINO',
-              start_date: '',
-              end_date: '',
-              airline: '',
-              reservationCode: ''
-            }
-          }) 
         }
       }else{
         console.log("NO DATA")
@@ -112,10 +104,10 @@ export default class CalendarTravel extends Component {
 
     formatData = async (data) => {
       let newData = {}
-      const vacation_start = {startingDay: true, color: '#FD2F40', textColor: 'white'};
-      const vacation_end = {endingDay: true, color: '#FD2F40', textColor: 'white'};
-      const vacation_between = {color:'#969696', textColor: 'white'};
-      const vacation_one = {startingDay: true, color: '#FD2F40', endingDay: true, textColor: 'white'};
+      const vacation_start = {startingDay: true, color: '#ED8C72', textColor: 'white'};
+      const vacation_end = {endingDay: true, color: '#ED8C72', textColor: 'white'};
+      const vacation_between = {color:'#F4EADE', textColor: 'gray'};
+      const vacation_one = {startingDay: true, color: '#ED8C72', endingDay: true, textColor: 'white'};
       Array.from(data, child => {
         let sd = child.start_date
         let ed = child.end_date
@@ -139,6 +131,27 @@ export default class CalendarTravel extends Component {
     render(){
       return(
         <View>
+        <Modal            
+            animationType = {"slide"}  
+            transparent = {true}  
+            visible = {this.state.modalActive}  
+        >  
+          <View style = {styles.modal}>  
+            <Card containerStyle={{width: '93%', borderRadius:20, borderWidth: 1 }}
+              title={<Text style={{textAlign:'center', paddingBottom: 15, fontSize: 20}}>{this.state.actualTrip.destination}</Text>}>
+              <Text style={{marginBottom: 10}}>INICIO: {this.state.actualTrip.start_date}</Text>
+              <Text style={{marginBottom: 10}}>TERMINO: {this.state.actualTrip.end_date}</Text>
+              <Text style={{marginBottom: 10}}>AEROLINEA: {this.state.actualTrip.airline}</Text>
+              <Text style={{marginBottom: 10}}>RESERVA: {this.state.actualTrip.reservationCode}</Text>
+              <Button
+                onPress={() => Linking.openURL(this.state.actualAirline)}
+                buttonStyle={{backgroundColor:'#2988BC', borderColor: '#2988BC', borderRadius: 15, borderWidth: 1 , marginLeft: 0, marginRight: 0, marginBottom: 0}}
+                title='IR A RESERVA' />
+              <Button title="CERRAR" buttonStyle={{ backgroundColor:'#ED8C72', borderColor: '#ED8C72', borderRadius:15, borderWidth: 1, top: 10, width: '50%', alignSelf: 'center' }} onPress = {() => {  
+                this.setState({ modalActive:!this.state.modalActive})}}/>
+            </Card>
+          </View>  
+        </Modal>
         <CalendarList
             horizontal={true}
             pagingEnabled={true}
@@ -157,19 +170,19 @@ export default class CalendarTravel extends Component {
               }
             }}
         />
-        <Card 
-          title={<Text style={{textAlign:'center', paddingBottom: 15, fontSize: 20}}>{this.state.actualTrip.destination}</Text>}>
-          <Text style={{marginBottom: 10}}>INICIO: {this.state.actualTrip.start_date}</Text>
-          <Text style={{marginBottom: 10}}>TERMINO: {this.state.actualTrip.end_date}</Text>
-          <Text style={{marginBottom: 10}}>AEROLINEA: {this.state.actualTrip.airline}</Text>
-          <Text style={{marginBottom: 10}}>RESERVA: {this.state.actualTrip.reservationCode}</Text>
-          <Button
-            onPress={() => Linking.openURL(this.state.actualAirline)}
-            buttonStyle={{borderRadius: 0, marginLeft: 0, marginRight: 0, marginBottom: 0}}
-            title='CHECK RESERVATION' />
-        </Card>
-
         </View>
       );
     }
 }  
+
+const styles = StyleSheet.create({
+  modal: {  
+    justifyContent: 'center',
+    alignItems: 'center', 
+    borderColor: '#fff',    
+    marginTop: 450,
+    width: '95%',
+    paddingBottom: 15,
+    marginLeft: 10
+  }
+});

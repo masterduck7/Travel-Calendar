@@ -21,12 +21,12 @@ export default class Home extends Component {
         </TouchableOpacity>
         <TouchableOpacity
           onPress={() => this.props.navigation.navigate('AddTrip')}
-          style={{...styles.button, top: 90 }}>
+          style={{...styles.button, top: 90, backgroundColor: '#2988BC' }}>
           <Text style={styles.text}>Añadir Viaje</Text>
         </TouchableOpacity>
         <TouchableOpacity
           onPress={() => this._clearData()}
-          style={{...styles.button, top: 150 }}>
+          style={{...styles.button, top: 150, backgroundColor: '#2F496E' }}>
           <Text style={styles.text}>Borrar datos</Text>
         </TouchableOpacity>
         <Text style={{ bottom:-200, color: '#888'}}>By LPSoftware</Text>
@@ -38,12 +38,12 @@ export default class Home extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: '#F4EADE',
     alignItems: 'center',
     justifyContent: 'center',
   },
   button:{
-    backgroundColor: '#d1625a',
+    backgroundColor: '#ED8C72',
     padding: 10,
     top:40,
     borderRadius: 5
