@@ -2,13 +2,16 @@ import React, { Component } from 'react';
 import { AsyncStorage, Text, View, StyleSheet, TouchableOpacity, ScrollView } from 'react-native';
 import { Input } from 'react-native-elements';
 import { Formik } from 'formik';
+import DatePicker from 'react-native-datepicker'
 
 export default class AddTrip extends Component{
 
     constructor(props){
         super(props);
         this.state = {
-            userData : Array()
+            userData : Array(),
+            startDate : "",
+            endDate : ""
         }
     }
 
@@ -70,16 +73,36 @@ export default class AddTrip extends Component{
                     value={values.destination}
                 />
                 <Text style={{ paddingTop:10, color: '#888', fontSize: 20}}>Fecha inicio:</Text>
-                <Input
+                <DatePicker
+                    style={{width: 200}}
+                    date={values.start_date}
                     placeholder="Inicio viaje"
-                    onChangeText={handleChange('start_date')}
-                    value={values.start_date}
+                    onDateChange={handleChange('start_date')}
+                    mode="date"
+                    format="YYYY-MM-DD"
+                    customStyles={{
+                    dateIcon: {
+                        position: 'absolute',
+                        left: -40,
+                        marginLeft: 0
+                    }
+                    }}
                 />
                 <Text style={{ paddingTop:10, color: '#888', fontSize: 20}}>Fecha Fin:</Text>
-                <Input
+                <DatePicker
+                    style={{width: 200}}
+                    date={values.end_date}
                     placeholder="Fin viaje"
-                    onChangeText={handleChange('end_date')}
-                    value={values.end_date}
+                    onDateChange={handleChange('end_date')}
+                    mode="date"
+                    format="YYYY-MM-DD"
+                    customStyles={{
+                    dateIcon: {
+                        position: 'absolute',
+                        left: -40,
+                        marginLeft: 0
+                    }
+                    }}
                 />
                 <Text style={{ paddingTop:10, color: '#888', fontSize: 20}}>Aerolinea:</Text>
                 <Input
