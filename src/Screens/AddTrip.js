@@ -109,7 +109,7 @@ export default class AddTrip extends Component{
 
 const styles = StyleSheet.create({
     container: {
-        backgroundColor: '#fff',
+        backgroundColor: '#F4EADE',
         flex: 1,
         flexDirection: 'row',
         justifyContent: 'space-between',
