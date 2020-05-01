@@ -2,13 +2,16 @@ import React, { Component } from 'react';
 import { AsyncStorage, Text, View, StyleSheet, TouchableOpacity, ScrollView } from 'react-native';
 import { Input } from 'react-native-elements';
 import { Formik } from 'formik';
+import DatePicker from 'react-native-datepicker'
 
 export default class AddTrip extends Component{
 
     constructor(props){
         super(props);
         this.state = {
-            userData : Array()
+            userData : Array(),
+            startDate : "",
+            endDate : ""
         }
     }
 
@@ -42,9 +45,9 @@ export default class AddTrip extends Component{
         <View style={styles.container}>
         <ScrollView>
             <Formik
-                initialValues={{destination: '', start_date: '', end_date: '', airline: '', reservationCode: '' }}
+                initialValues={{destination: '', start_date: '', end_date: '', airline: '', reservationCode: '', startTime: '', endTime: '' }}
                 onSubmit={values => {
-                    if (values.destination === '' || values.start_date === '' || values.end_date === '' || values.airline === '' || values.reservationCode === '') {
+                    if (values.destination === '' || values.start_date === '' || values.end_date === '' || values.airline === '' || values.reservationCode === '' || values.startTime === '' || values.endTime === '') {
                         alert("Favor llenar todos los campos")    
                     } else {
                         let data = this.state.userData
@@ -70,16 +73,64 @@ export default class AddTrip extends Component{
                     value={values.destination}
                 />
                 <Text style={{ paddingTop:10, color: '#888', fontSize: 20}}>Fecha inicio:</Text>
-                <Input
+                <DatePicker
+                    style={{width: '50%'}}
+                    date={values.start_date}
                     placeholder="Inicio viaje"
-                    onChangeText={handleChange('start_date')}
-                    value={values.start_date}
+                    onDateChange={handleChange('start_date')}
+                    mode="date"
+                    format="YYYY-MM-DD"
+                    customStyles={{
+                    dateIcon: {
+                        position: 'absolute',
+                        left: -40,
+                        marginLeft: 0
+                    }
+                    }}
+                />
+                <Text style={{ paddingTop:10, color: '#888', fontSize: 20}}>Hora vuelo a destino:</Text>
+                <DatePicker
+                    mode="time"
+                    style={{width: '50%', paddingTop: 10}}
+                    date={values.startTime}
+                    onDateChange={handleChange('startTime')}
+                    customStyles={{
+                    dateIcon: {
+                        position: 'absolute',
+                        left: -40,
+                        marginLeft: 0
+                    }
+                    }}
                 />
                 <Text style={{ paddingTop:10, color: '#888', fontSize: 20}}>Fecha Fin:</Text>
-                <Input
+                <DatePicker
+                    style={{width: '50%'}}
+                    date={values.end_date}
                     placeholder="Fin viaje"
-                    onChangeText={handleChange('end_date')}
-                    value={values.end_date}
+                    onDateChange={handleChange('end_date')}
+                    mode="date"
+                    format="YYYY-MM-DD"
+                    customStyles={{
+                    dateIcon: {
+                        position: 'absolute',
+                        left: -40,
+                        marginLeft: 0
+                    }
+                    }}
+                />
+                <Text style={{ paddingTop:10, color: '#888', fontSize: 20}}>Hora vuelo de retorno:</Text>
+                <DatePicker
+                    mode="time"
+                    style={{width: '50%', paddingTop: 10}}
+                    date={values.endTime}
+                    onDateChange={handleChange('endTime')}
+                    customStyles={{
+                    dateIcon: {
+                        position: 'absolute',
+                        left: -40,
+                        marginLeft: 0
+                    }
+                    }}
                 />
                 <Text style={{ paddingTop:10, color: '#888', fontSize: 20}}>Aerolinea:</Text>
                 <Input
