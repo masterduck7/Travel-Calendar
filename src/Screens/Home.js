@@ -31,7 +31,7 @@ export default class Home extends Component {
           style={{...styles.button, top: 30, backgroundColor: '#2F496E' }}>
           <Text style={styles.text}>Borrar datos</Text>
         </TouchableOpacity>
-        <Text style={{ bottom:-100, color: '#888'}}>By LPSoftware</Text>
+        <Text style={{ bottom:-100, color: '#888'}}>BY LPSoftware</Text>
       </View>
     );
   }
