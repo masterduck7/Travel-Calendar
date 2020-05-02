@@ -171,9 +171,9 @@ export default class CalendarTravel extends Component {
               <Text style={{marginBottom: 10}}>TERMINO: {this.state.actualTrip.end_date} {this.state.actualTrip.endTime}</Text>
               <ScrollView horizontal={false}>
                 <View style={styles.buttonContainer}>
-                <Button title="SI" buttonStyle={{ backgroundColor:'#2F496E', borderColor: '#2F496E', borderRadius:15, borderWidth: 1, width: '80%', height: '75%', alignSelf: 'center' }} 
+                <Button title="SI" buttonStyle={{ backgroundColor:'#ED8C72', borderColor: '#ED8C72', borderRadius:15, borderWidth: 1, width: '80%', height: '75%', alignSelf: 'center' }} 
                 onPress = {() => {this.removeActualTrip()}}/>
-                <Button title="NO" buttonStyle={{ backgroundColor:'#ED8C72', borderColor: '#ED8C72', borderRadius:15, borderWidth: 1, width: '80%', height: '75%', alignSelf: 'center' }} onPress = {() => {  
+                <Button title="NO" buttonStyle={{ backgroundColor:'#2F496E', borderColor: '#2F496E', borderRadius:15, borderWidth: 1, width: '80%', height: '75%', alignSelf: 'center' }} onPress = {() => {  
                   this.setState({ modalRemove: false })}}/>
                 </View>
               </ScrollView>
@@ -198,9 +198,9 @@ export default class CalendarTravel extends Component {
                 title='IR A RESERVA' />
               <ScrollView horizontal={false}>
               <View style={styles.buttonContainer}>
-              <Button title="ELIMINAR" buttonStyle={{ backgroundColor:'#2F496E', borderColor: '#2F496E', borderRadius:15, borderWidth: 1, width: '80%', height: '75%', alignSelf: 'center' }} 
+              <Button title="ELIMINAR" buttonStyle={{ backgroundColor:'#ED8C72', borderColor: '#ED8C72', borderRadius:15, borderWidth: 1, width: '80%', height: '75%', alignSelf: 'center' }} 
               onPress = {() => this.setState({modalRemove: true, modalDetail: false}) }/>
-              <Button title="CERRAR" buttonStyle={{ backgroundColor:'#ED8C72', borderColor: '#ED8C72', borderRadius:15, borderWidth: 1, width: '80%', height: '75%', alignSelf: 'center' }} onPress = {() => {  
+              <Button title="CERRAR" buttonStyle={{ backgroundColor:'#2F496E', borderColor: '#2F496E', borderRadius:15, borderWidth: 1, width: '80%', height: '75%', alignSelf: 'center' }} onPress = {() => {  
                 this.setState({ modalDetail:!this.state.modalDetail})}}/>
               </View>
               </ScrollView>
