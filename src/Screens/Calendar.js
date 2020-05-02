@@ -1,7 +1,7 @@
 import {CalendarList} from 'react-native-calendars';
 import React, { Component } from 'react';
-import { Alert, AsyncStorage, View, Text, Linking, Modal, StyleSheet, ScrollView } from 'react-native';
-import { Card, Button, ThemeConsumer } from 'react-native-elements'
+import { AsyncStorage, View, Text, Linking, Modal, StyleSheet, ScrollView } from 'react-native';
+import { Card, Button } from 'react-native-elements'
 import moment from 'moment';
 
 export default class CalendarTravel extends Component {
@@ -163,7 +163,7 @@ export default class CalendarTravel extends Component {
       return(
         <View>
         <Modal visible={this.state.modalRemove} transparent={true} animationType = {"slide"}>
-        <View style = {styles.modalRemove}>  
+        <View style = {styles.modal}>  
             <Card containerStyle={{width: '93%', borderRadius:20, borderWidth: 1 }}
               title={<Text style={{textAlign:'center', paddingBottom: 15, fontSize: 20}}>¿Desea eliminar el viaje seleccionado?</Text>}>
               <Text style={{marginBottom: 10}}>DESTINO: {this.state.actualTrip.destination}</Text>
@@ -246,15 +246,5 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-around',
     top: 10
-  },
-  modalRemove: {  
-    justifyContent: 'center',
-    alignItems: 'center', 
-    borderColor: '#fff',    
-    marginTop: 500,
-    marginBottom: 100,
-    width: '95%',
-    paddingBottom: 15,
-    marginLeft: 10
   }
 });
