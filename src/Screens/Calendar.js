@@ -148,9 +148,11 @@ export default class CalendarTravel extends Component {
       const actual = this.state.actualTrip
       let newData = []
       Array.from(data, child => {
-        if (actual.destination !== child.destination && actual.reservationCode !== child.reservationCode && 
-          actual.start_date !== child.start_date && actual.end_date !== child.end_date && 
-          actual.airline !== child.airline && actual.startTime !== child.startTime && actual.endTime !== child.endTime ) {
+        if (actual.destination === child.destination && actual.reservationCode === child.reservationCode && 
+          actual.start_date === child.start_date && actual.end_date === child.end_date && 
+          actual.airline === child.airline && actual.startTime === child.startTime && actual.endTime === child.endTime ) {
+          console.log("FOUND")
+        }else{
           newData.push(child)
         }
       })
