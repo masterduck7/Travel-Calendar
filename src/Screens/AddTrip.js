@@ -3,6 +3,7 @@ import { AsyncStorage, Text, View, StyleSheet, TouchableOpacity, ScrollView } fr
 import { Input } from 'react-native-elements';
 import { Formik } from 'formik';
 import DatePicker from 'react-native-datepicker'
+import moment from 'moment';
 
 export default class AddTrip extends Component{
 
@@ -49,7 +50,11 @@ export default class AddTrip extends Component{
                 onSubmit={values => {
                     if (values.destination === '' || values.start_date === '' || values.end_date === '' || values.airline === '' || values.reservationCode === '' || values.startTime === '' || values.endTime === '') {
                         alert("Favor llenar todos los campos")    
-                    } else {
+                    }
+                    else if( moment(values.end_date) < moment(values.start_date) ){
+                        alert("Favor ingresa una fecha válida")
+                    }
+                     else {
                         let data = this.state.userData
                         let newData = new Array()
                         if (data.length > 0) {
