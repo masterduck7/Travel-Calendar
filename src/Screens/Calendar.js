@@ -1,7 +1,7 @@
 import {CalendarList} from 'react-native-calendars';
 import React, { Component } from 'react';
-import { AsyncStorage, View, Text, Linking, Modal, StyleSheet } from 'react-native';
-import { Card, Button } from 'react-native-elements'
+import { Alert, AsyncStorage, View, Text, Linking, Modal, StyleSheet, ScrollView } from 'react-native';
+import { Card, Button, ThemeConsumer } from 'react-native-elements'
 import moment from 'moment';
 
 export default class CalendarTravel extends Component {
@@ -23,7 +23,8 @@ export default class CalendarTravel extends Component {
           reservationCode: ''
         },
         actualAirline: '',
-        modalActive: false
+        modalDetail: false,
+        modalRemove: false
       }
     }
 
@@ -35,6 +36,14 @@ export default class CalendarTravel extends Component {
         }
       } catch (error) {
         console.log("Error retrieving data")
+      }
+    };
+
+    _storeData = async (values) => {
+      try {
+          await AsyncStorage.setItem('@Trips', JSON.stringify(values));
+      } catch (error) {
+          console.log("Error saving data")
       }
     };
 
@@ -89,7 +98,7 @@ export default class CalendarTravel extends Component {
               reservationCode: sTrip.reservationCode
             },
             actualAirline: airline,
-            modalActive: !this.state.modalActive
+            modalDetail: !this.state.modalDetail
           })
         }
       }else{
@@ -134,13 +143,47 @@ export default class CalendarTravel extends Component {
       })
     }
 
+    removeActualTrip(){
+      const data = this.state.tripsData
+      const actual = this.state.actualTrip
+      let newData = []
+      Array.from(data, child => {
+        if (actual.destination !== child.destination && actual.reservationCode !== child.reservationCode && 
+          actual.start_date !== child.start_date && actual.end_date !== child.end_date && 
+          actual.airline !== child.airline && actual.startTime !== child.startTime && actual.endTime !== child.endTime ) {
+          newData.push(child)
+        }
+      })
+      this.formatData(newData)
+      this._storeData(newData)
+      this.setState({ modalDetail: false, modalRemove: false })
+    }
+
     render(){
       return(
         <View>
+        <Modal visible={this.state.modalRemove} transparent={true} animationType = {"slide"}>
+        <View style = {styles.modalRemove}>  
+            <Card containerStyle={{width: '93%', borderRadius:20, borderWidth: 1 }}
+              title={<Text style={{textAlign:'center', paddingBottom: 15, fontSize: 20}}>¿Desea eliminar el viaje seleccionado?</Text>}>
+              <Text style={{marginBottom: 10}}>DESTINO: {this.state.actualTrip.destination}</Text>
+              <Text style={{marginBottom: 10}}>INICIO: {this.state.actualTrip.start_date} {this.state.actualTrip.startTime}</Text>
+              <Text style={{marginBottom: 10}}>TERMINO: {this.state.actualTrip.end_date} {this.state.actualTrip.endTime}</Text>
+              <ScrollView horizontal={false}>
+                <View style={styles.buttonContainer}>
+                <Button title="SI" buttonStyle={{ backgroundColor:'#2F496E', borderColor: '#2F496E', borderRadius:15, borderWidth: 1, width: '80%', height: '75%', alignSelf: 'center' }} 
+                onPress = {() => {this.removeActualTrip()}}/>
+                <Button title="NO" buttonStyle={{ backgroundColor:'#ED8C72', borderColor: '#ED8C72', borderRadius:15, borderWidth: 1, width: '80%', height: '75%', alignSelf: 'center' }} onPress = {() => {  
+                  this.setState({ modalRemove: false })}}/>
+                </View>
+              </ScrollView>
+            </Card>
+        </View>
+        </Modal>
         <Modal            
             animationType = {"slide"}  
             transparent = {true}  
-            visible = {this.state.modalActive}  
+            visible = {this.state.modalDetail}  
         >  
           <View style = {styles.modal}>  
             <Card containerStyle={{width: '93%', borderRadius:20, borderWidth: 1 }}
@@ -153,8 +196,14 @@ export default class CalendarTravel extends Component {
                 onPress={() => Linking.openURL(this.state.actualAirline)}
                 buttonStyle={{backgroundColor:'#2988BC', borderColor: '#2988BC', borderRadius: 15, borderWidth: 1 , marginLeft: 0, marginRight: 0, marginBottom: 0}}
                 title='IR A RESERVA' />
-              <Button title="CERRAR" buttonStyle={{ backgroundColor:'#ED8C72', borderColor: '#ED8C72', borderRadius:15, borderWidth: 1, top: 10, width: '50%', alignSelf: 'center' }} onPress = {() => {  
-                this.setState({ modalActive:!this.state.modalActive})}}/>
+              <ScrollView horizontal={false}>
+              <View style={styles.buttonContainer}>
+              <Button title="ELIMINAR" buttonStyle={{ backgroundColor:'#2F496E', borderColor: '#2F496E', borderRadius:15, borderWidth: 1, width: '80%', height: '75%', alignSelf: 'center' }} 
+              onPress = {() => this.setState({modalRemove: true, modalDetail: false}) }/>
+              <Button title="CERRAR" buttonStyle={{ backgroundColor:'#ED8C72', borderColor: '#ED8C72', borderRadius:15, borderWidth: 1, width: '80%', height: '75%', alignSelf: 'center' }} onPress = {() => {  
+                this.setState({ modalDetail:!this.state.modalDetail})}}/>
+              </View>
+              </ScrollView>
             </Card>
           </View>  
         </Modal>
@@ -186,7 +235,24 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center', 
     borderColor: '#fff',    
-    marginTop: 450,
+    marginTop: 500,
+    marginBottom: 100,
+    width: '95%',
+    paddingBottom: 15,
+    marginLeft: 10
+  },
+  buttonContainer:{
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    top: 10
+  },
+  modalRemove: {  
+    justifyContent: 'center',
+    alignItems: 'center', 
+    borderColor: '#fff',    
+    marginTop: 500,
+    marginBottom: 100,
     width: '95%',
     paddingBottom: 15,
     marginLeft: 10
