@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { AsyncStorage, Text, View, StyleSheet, TouchableOpacity, ScrollView, ToastAndroid } from 'react-native';
+import { AsyncStorage, Alert, Text, View, StyleSheet, TouchableOpacity, ScrollView, ToastAndroid } from 'react-native';
 import { Input } from 'react-native-elements';
 import { Formik } from 'formik';
 import DatePicker from 'react-native-datepicker'
@@ -49,10 +49,30 @@ export default class AddTrip extends Component{
                 initialValues={{destination: '', start_date: '', end_date: '', airline: '', reservationCode: '', startTime: '', endTime: '' }}
                 onSubmit={values => {
                     if (values.destination === '' || values.start_date === '' || values.end_date === '' || values.airline === '' || values.reservationCode === '' || values.startTime === '' || values.endTime === '') {
-                        alert("Favor llenar todos los campos")    
+                        Alert.alert(
+                            "Error",
+                            "Favor llenar todos los campos",
+                            [
+                              {
+                                text: "OK",
+                                style: "cancel"
+                              }
+                            ],
+                            { cancelable: false }
+                        );                      
                     }
                     else if( moment(values.end_date) < moment(values.start_date) ){
-                        alert("Favor ingresa una fecha válida")
+                        Alert.alert(
+                            "Error",
+                            "Favor ingresa una fecha válida",
+                            [
+                              {
+                                text: "OK",
+                                style: "cancel"
+                              }
+                            ],
+                            { cancelable: false }
+                        );
                     }
                      else {
                         let data = this.state.userData
@@ -79,7 +99,7 @@ export default class AddTrip extends Component{
                     onChangeText={handleChange('destination')}
                     value={values.destination}
                 />
-                <Text style={{ paddingTop:10, color: '#888', fontSize: 20}}>Fecha inicio:</Text>
+                <Text style={{ paddingTop:10, color: '#888', fontSize: 20}}>Fecha Ida:</Text>
                 <DatePicker
                     style={{width: '50%'}}
                     date={values.start_date}
@@ -95,7 +115,7 @@ export default class AddTrip extends Component{
                     }
                     }}
                 />
-                <Text style={{ paddingTop:10, color: '#888', fontSize: 20}}>Hora vuelo a destino:</Text>
+                <Text style={{ paddingTop:10, color: '#888', fontSize: 20}}>Horario:</Text>
                 <DatePicker
                     mode="time"
                     style={{width: '50%', paddingTop: 10}}
@@ -109,7 +129,7 @@ export default class AddTrip extends Component{
                     }
                     }}
                 />
-                <Text style={{ paddingTop:10, color: '#888', fontSize: 20}}>Fecha Fin:</Text>
+                <Text style={{ paddingTop:10, color: '#888', fontSize: 20}}>Fecha Vuelta:</Text>
                 <DatePicker
                     style={{width: '50%'}}
                     date={values.end_date}
@@ -125,7 +145,7 @@ export default class AddTrip extends Component{
                     }
                     }}
                 />
-                <Text style={{ paddingTop:10, color: '#888', fontSize: 20}}>Hora vuelo de retorno:</Text>
+                <Text style={{ paddingTop:10, color: '#888', fontSize: 20}}>Horario:</Text>
                 <DatePicker
                     mode="time"
                     style={{width: '50%', paddingTop: 10}}
@@ -139,13 +159,13 @@ export default class AddTrip extends Component{
                     }
                     }}
                 />
-                <Text style={{ paddingTop:10, color: '#888', fontSize: 20}}>Aerolinea:</Text>
+                <Text style={{ paddingTop:10, color: '#888', fontSize: 20}}>Aerolínea:</Text>
                 <Input
                     placeholder="Aerolinea"
                     onChangeText={handleChange('airline')}
                     value={values.airline}
                 />
-                <Text style={{ paddingTop:10, color: '#888', fontSize: 20}}>Codigo Reserva:</Text>
+                <Text style={{ paddingTop:10, color: '#888', fontSize: 20}}>Código de Reserva:</Text>
                 <Input
                     placeholder="Reserva"
                     onChangeText={handleChange('reservationCode')}
