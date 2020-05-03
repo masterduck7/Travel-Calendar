@@ -182,8 +182,8 @@ export default class CalendarTravel extends Component {
             <Card containerStyle={{width: '93%', borderRadius:20, borderWidth: 1 }}
               title={<Text style={{textAlign:'center', paddingBottom: 15, fontSize: 20}}>¿Desea eliminar el viaje seleccionado?</Text>}>
               <Text style={{marginBottom: 10}}>DESTINO: {this.state.actualTrip.destination}</Text>
-              <Text style={{marginBottom: 10}}>INICIO: {this.state.actualTrip.start_date} {this.state.actualTrip.startTime}</Text>
-              <Text style={{marginBottom: 10}}>TERMINO: {this.state.actualTrip.end_date} {this.state.actualTrip.endTime}</Text>
+              <Text style={{marginBottom: 10}}>INICIO: {moment(this.state.actualTrip.start_date).format('l')} , {this.state.actualTrip.startTime}</Text>
+              <Text style={{marginBottom: 10}}>TERMINO: {moment(this.state.actualTrip.end_date).format('l')} , {this.state.actualTrip.endTime}</Text>
               <ScrollView horizontal={false}>
                 <View style={styles.buttonContainer}>
                 <Button title="SI" buttonStyle={{ backgroundColor:'#ED8C72', borderColor: '#ED8C72', borderRadius:15, borderWidth: 1, width: '80%', height: '75%', alignSelf: 'center' }} 
@@ -203,8 +203,8 @@ export default class CalendarTravel extends Component {
           <View style = {styles.modal}>  
             <Card containerStyle={{width: '93%', borderRadius:20, borderWidth: 1 }}
               title={<Text style={{textAlign:'center', paddingBottom: 15, fontSize: 20}}>{this.state.actualTrip.destination}</Text>}>
-              <Text style={{marginBottom: 10}}>INICIO: {this.state.actualTrip.start_date} {this.state.actualTrip.startTime}</Text>
-              <Text style={{marginBottom: 10}}>TERMINO: {this.state.actualTrip.end_date} {this.state.actualTrip.endTime}</Text>
+              <Text style={{marginBottom: 10}}>INICIO: {moment(this.state.actualTrip.start_date).format('l')} , {this.state.actualTrip.startTime}</Text>
+              <Text style={{marginBottom: 10}}>TERMINO: {moment(this.state.actualTrip.end_date).format('l')} , {this.state.actualTrip.endTime}</Text>
               <Text style={{marginBottom: 10}}>AEROLINEA: {this.state.actualTrip.airline}</Text>
               <ScrollView horizontal={false}>
               <View  style={styles.textButtonContainer}>
