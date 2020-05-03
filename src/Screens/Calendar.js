@@ -205,7 +205,7 @@ export default class CalendarTravel extends Component {
               title={<Text style={{textAlign:'center', paddingBottom: 15, fontSize: 20}}>{this.state.actualTrip.destination}</Text>}>
               <Text style={{marginBottom: 10}}>INICIO: {moment(this.state.actualTrip.start_date).format('l')} , {this.state.actualTrip.startTime}</Text>
               <Text style={{marginBottom: 10}}>TERMINO: {moment(this.state.actualTrip.end_date).format('l')} , {this.state.actualTrip.endTime}</Text>
-              <Text style={{marginBottom: 10}}>AEROLINEA: {this.state.actualTrip.airline}</Text>
+              <Text style={{marginBottom: 10}}>AEROLÍNEA: {this.state.actualTrip.airline}</Text>
               <ScrollView horizontal={false}>
               <View  style={styles.textButtonContainer}>
               <Text style={{marginBottom: 10}}>RESERVA: {this.state.actualTrip.reservationCode}</Text>
@@ -238,6 +238,9 @@ export default class CalendarTravel extends Component {
             onDayPress={(day) => {this.showData(day)}}
             markedDates={this.state.formatedTrips}
             markingType={'period'}
+            style={{
+              height: '70%'
+            }}
             theme={{
               'stylesheet.day.period': {
                 base: {
@@ -246,7 +249,9 @@ export default class CalendarTravel extends Component {
                   alignItems: 'center',
                   width: 38,
                 }
-              }
+              },
+              todayTextColor: '#2988BC',
+              textMonthFontWeight: 'bold',
             }}
         />
         </View>
