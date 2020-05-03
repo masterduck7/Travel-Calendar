@@ -1,7 +1,8 @@
 import {CalendarList} from 'react-native-calendars';
 import React, { Component } from 'react';
-import { AsyncStorage, View, Text, Linking, Modal, StyleSheet, ScrollView } from 'react-native';
+import { AsyncStorage, Clipboard, View, Text, Linking, Modal, StyleSheet, ScrollView, ToastAndroid } from 'react-native';
 import { Card, Button } from 'react-native-elements'
+import { Ionicons } from '@expo/vector-icons';
 import moment from 'moment';
 
 export default class CalendarTravel extends Component {
@@ -158,6 +159,7 @@ export default class CalendarTravel extends Component {
       })
       this.formatData(newData)
       this._storeData(newData)
+      ToastAndroid.show("Viaje eliminado", ToastAndroid.SHORT);
       this.setState({ modalDetail: false, modalRemove: false })
     }
 
@@ -193,7 +195,16 @@ export default class CalendarTravel extends Component {
               <Text style={{marginBottom: 10}}>INICIO: {this.state.actualTrip.start_date} {this.state.actualTrip.startTime}</Text>
               <Text style={{marginBottom: 10}}>TERMINO: {this.state.actualTrip.end_date} {this.state.actualTrip.endTime}</Text>
               <Text style={{marginBottom: 10}}>AEROLINEA: {this.state.actualTrip.airline}</Text>
+              <ScrollView horizontal={false}>
+              <View  style={styles.textButtonContainer}>
               <Text style={{marginBottom: 10}}>RESERVA: {this.state.actualTrip.reservationCode}</Text>
+              <Ionicons name="md-copy" size={25} color="gray" style={{marginLeft: 10, top: -2}} 
+              onPress={() => {
+                Clipboard.setString(this.state.actualTrip.reservationCode)
+                ToastAndroid.show("Código de reserva copiado", ToastAndroid.SHORT);
+              }}/>
+              </View>
+              </ScrollView>
               <Button
                 onPress={() => Linking.openURL(this.state.actualAirline)}
                 buttonStyle={{backgroundColor:'#2988BC', borderColor: '#2988BC', borderRadius: 15, borderWidth: 1 , marginLeft: 0, marginRight: 0, marginBottom: 0}}
@@ -248,5 +259,11 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-around',
     top: 10
+  },
+  textButtonContainer:{
+    flex: 1,
+    flexDirection: 'row',
+    alignContent: 'space-between',
+    marginBottom: 10
   }
 });
