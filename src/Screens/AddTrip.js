@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { AsyncStorage, Text, View, StyleSheet, TouchableOpacity, ScrollView } from 'react-native';
+import { AsyncStorage, Text, View, StyleSheet, TouchableOpacity, ScrollView, ToastAndroid } from 'react-native';
 import { Input } from 'react-native-elements';
 import { Formik } from 'formik';
 import DatePicker from 'react-native-datepicker'
@@ -66,6 +66,7 @@ export default class AddTrip extends Component{
                             newData.push(values)
                         }
                         {this._storeData(newData)}
+                        ToastAndroid.show("Viaje agregado", ToastAndroid.SHORT);
                         {this.props.navigation.navigate('Home')}
                     }
                 }}

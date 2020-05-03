@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Modal, Image, AsyncStorage, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { Modal, Image, AsyncStorage, ScrollView, StyleSheet, Text, TouchableOpacity, ToastAndroid, View } from 'react-native';
 import { Card, Button } from 'react-native-elements'
 import Travel from '../../assets/Travel.png';
 import CancelledFlight from '../../assets/CancelledFlight.png';
@@ -36,6 +36,7 @@ export default class Home extends Component {
                 <Button title="SI" buttonStyle={{ backgroundColor:'#ED8C72', borderColor: '#ED8C72', borderRadius:15, borderWidth: 1, width: '80%', height: '75%', alignSelf: 'center' }} 
                 onPress = {() => {
                   this._clearData()
+                  ToastAndroid.show("Viajes eliminados", ToastAndroid.SHORT);
                   this.setState({modalRemove:false})
                 }}/>
                 <Button title="NO" buttonStyle={{ backgroundColor:'#2F496E', borderColor: '#2F496E', borderRadius:15, borderWidth: 1, width: '80%', height: '75%', alignSelf: 'center' }} onPress = {() => {  
