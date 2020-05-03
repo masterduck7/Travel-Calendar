@@ -1,8 +1,8 @@
 import {CalendarList} from 'react-native-calendars';
 import {LocaleConfig} from 'react-native-calendars';
 import React, { Component } from 'react';
-import { AsyncStorage, Clipboard, View, Text, Linking, Modal, StyleSheet, ScrollView, ToastAndroid } from 'react-native';
-import { Card, Button } from 'react-native-elements'
+import { AsyncStorage, Clipboard, Linking, Modal, ScrollView, StyleSheet, Text, ToastAndroid, View } from 'react-native';
+import { Button, Card } from 'react-native-elements'
 import { Ionicons } from '@expo/vector-icons';
 import moment from 'moment';
 
@@ -67,7 +67,12 @@ export default class CalendarTravel extends Component {
       let selectedTrip = []
       Array.from(data, child => {
         const compare = (child.start_date === day || child.end_date === day )
-        if (compare) {
+        // Check if selected day is a non working day
+        if ('' === child.destination && '' === child.reservationCode && '' === child.end_date && 
+        '' === child.airline && '' === child.startTime && '' === child.endTime ){
+          console.log("This day is non working day")
+        }
+        else if (compare) {
           selectedTrip = {
             destination: child.destination,
             start_date: child.start_date,
@@ -83,7 +88,10 @@ export default class CalendarTravel extends Component {
     }
 
     showData(day){
-      if (this.state.tripsData !== []) {
+      const formated = this.state.formatedTrips
+      // Check if trip is on data and is valid trip
+      // Example: 2 trips on same date is wrong and that is no formated
+      if (this.state.tripsData !== [] && formated[day.dateString] !== undefined ) {
         let sTrip = this.findDate(day.dateString, this.state.tripsData)
         if (sTrip.length !== 0) {
           let airline = ''
@@ -131,24 +139,74 @@ export default class CalendarTravel extends Component {
 
     formatData = async (data) => {
       let newData = {}
+      let nonWorkingDays = []
       const vacation_start = {startingDay: true, color: '#ED8C72', textColor: 'white'};
       const vacation_end = {endingDay: true, color: '#ED8C72', textColor: 'white'};
       const vacation_between = {color:'#F4EADE', textColor: 'gray'};
       const vacation_one = {startingDay: true, color: '#ED8C72', endingDay: true, textColor: 'white'};
+      const non_working_day = {color:'#D0312E', textColor: 'white'};
+      const non_working_day_one = {startingDay: true, color: '#D0312E', endingDay: true, textColor: 'white'};
+      const non_working_day_between = {color:'#D0312E', textColor: 'white'};
+      const non_working_day_start = {startingDay: true, color: '#D0312E', textColor: 'white'};
+      const non_working_day_end = {endingDay: true, color: '#D0312E', textColor: 'white'};
       Array.from(data, child => {
         let sd = child.start_date
         let ed = child.end_date
-        if (sd === ed) {
-          newData[sd] = vacation_one;
+        // Check if one trip on the same day
+        if(newData[sd] !== undefined && !nonWorkingDays.includes(sd) ){
+          console.log("2 trips on same day. Check trips start date: ", sd , " - End date: " , ed)
+        }
+        else if(newData[ed] !== undefined && !nonWorkingDays.includes(ed) ){
+          console.log("2 trips on same day. Check trips start date: ", sd , " - End date: " , ed)
+        }
+        // Add non working days
+        else if('' === child.destination && '' === child.reservationCode && '' === ed && 
+          '' === child.airline && '' === child.startTime && '' === child.endTime ){
+            console.log("A")
+            newData[sd] = non_working_day;
+            nonWorkingDays.push(sd)
+        }
+        // Check one day vacation
+        else if (sd === ed) {
+          console.log("AA")
+          // Check non working days
+          if (!nonWorkingDays.includes(sd) && !nonWorkingDays.includes(ed)) {
+            newData[sd] = vacation_one;
+          }else{
+            delete newData[sd]
+            newData[sd] = non_working_day_one
+          }
+        // Check longer vacation
         }else{
-          newData[sd] = vacation_start;
+          console.log("AAA")
+          // Check non working days
+          // Check start date
+          if (!nonWorkingDays.includes(sd)) {
+            newData[sd] = vacation_start;
+          }else{
+            delete newData[sd]
+            newData[sd] = non_working_day_start
+          }
+          // Check days between
           let daysBetween = this.getAllDaysBetween(sd,ed)
           for (let i = 0; i < daysBetween.length; i++) {
-            newData[daysBetween[i]] = vacation_between;
+            if (!nonWorkingDays.includes(daysBetween[i])) {
+              newData[daysBetween[i]] = vacation_between;  
+            }else{
+              delete newData[daysBetween[i]]
+              newData[daysBetween[i]] = non_working_day_between
+            }
           }
-          newData[ed] = vacation_end;
+          // Check end date
+          if (!nonWorkingDays.includes(ed)) {
+            newData[ed] = vacation_end;
+          }else{
+            delete newData[ed]
+            newData[ed] = non_working_day_end
+          }
         }
       })
+      console.log(newData)
       this.setState({
         formatedTrips: newData,
         tripsData: data
