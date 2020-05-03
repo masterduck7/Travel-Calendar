@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import { Modal, Image, AsyncStorage, ScrollView, StyleSheet, Text, TouchableOpacity, ToastAndroid, View } from 'react-native';
-import { Card, Button } from 'react-native-elements'
+import { AsyncStorage, Image, Modal, ScrollView, StyleSheet, Text, ToastAndroid, TouchableOpacity, View } from 'react-native';
+import { Button, Card } from 'react-native-elements'
 import Travel from '../../assets/Travel.png';
 import CancelledFlight from '../../assets/CancelledFlight.png';
 
@@ -47,24 +47,31 @@ export default class Home extends Component {
         </View>
         </Modal>
 
-        <Text style={{color: '#888', fontSize: 50, top: -100 }}>Travel Calendar</Text>
-        <Image source={Travel} resizeMethod="resize" resizeMode="stretch" style={{top: -80}} /> 
+        <Text style={{color: '#888', fontSize: 50, top: 20 }}>Travel Calendar</Text>
+        <Image source={Travel} resizeMethod="resize" resizeMode="stretch" style={{top: 20}} /> 
         <TouchableOpacity
           onPress={() => this.props.navigation.navigate('Calendar')}
           style={styles.button}>
           <Text style={styles.text}>Calendario</Text>
         </TouchableOpacity>
-        <TouchableOpacity
-          onPress={() => this.props.navigation.navigate('AddTrip')}
-          style={{...styles.button, top: 0, backgroundColor: '#2988BC' }}>
-          <Text style={styles.text}>Añadir Viaje</Text>
-        </TouchableOpacity>
+        <View style={styles.textButtonContainer}>
+          <TouchableOpacity
+            onPress={() => this.props.navigation.navigate('AddTrip')}
+            style={{...styles.button, left: -2, height: 50, top: -50, backgroundColor: '#2988BC' }}>
+            <Text style={styles.text}>Añadir Viaje</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => this.props.navigation.navigate('AddNoWorkDay')}
+            style={{...styles.button, left: 5, height: 50, top: -50, backgroundColor: '#2988BC' }}>
+            <Text style={styles.text}>Añadir Día no laboral</Text>
+          </TouchableOpacity>
+        </View>
         <TouchableOpacity
           onPress={() => this.setState({modalRemove:true})}
-          style={{...styles.button, top: 30, backgroundColor: '#2F496E' }}>
+          style={{...styles.button, top: -120, backgroundColor: '#2F496E' }}>
           <Text style={styles.text}>Borrar datos</Text>
         </TouchableOpacity>
-        <Text style={{ bottom:-100, color: '#888'}}>BY LPSoftware</Text>
+        <Text style={{ top: -50, color: '#888'}}>BY LPSoftware</Text>
       </View>
     );
   }
@@ -78,9 +85,9 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   button:{
-    backgroundColor: '#ED8C72',
+    backgroundColor: '#006C84',
     padding: 10,
-    top:-30,
+    top: 80,
     borderRadius: 5
   },
   text: {
@@ -100,7 +107,12 @@ const styles = StyleSheet.create({
   buttonContainer:{
     flex: 1,
     flexDirection: 'row',
-    justifyContent: 'space-around',
+    justifyContent: 'center',
     top: 10
+  },
+  textButtonContainer:{
+    flex: 1,
+    flexDirection: 'row',
+    marginTop: 180
   }
 });

@@ -5,6 +5,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import Home from '../Screens/Home.js'
 import Calendar from '../Screens/Calendar.js'
 import AddTrip from '../Screens/AddTrip.js'
+import AddNoWorkDay from '../Screens/AddNoWorkDay.js';
 
 const Stack = createStackNavigator();
 
@@ -42,6 +43,18 @@ function MainStackNavigator() {
             <Stack.Screen name='AddTrip' component={AddTrip}
             options={{
                 title: 'Añadir Viaje',
+                headerStyle: {
+                    backgroundColor: '#2F496E'
+                },
+                headerTintColor: '#fff',
+                headerTitleStyle: {
+                    fontWeight: 'bold'
+                },
+                headerTitleAlign:"center"
+            }}/>
+            <Stack.Screen name='AddNoWorkDay' component={AddNoWorkDay}
+            options={{
+                title: 'Añadir Día no laboral',
                 headerStyle: {
                     backgroundColor: '#2F496E'
                 },

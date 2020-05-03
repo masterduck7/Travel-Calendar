@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { AsyncStorage, Alert, Text, View, StyleSheet, TouchableOpacity, ScrollView, ToastAndroid } from 'react-native';
+import { Alert, AsyncStorage, ScrollView, StyleSheet, Text, ToastAndroid, TouchableOpacity, View } from 'react-native';
 import { Input } from 'react-native-elements';
 import { Formik } from 'formik';
 import DatePicker from 'react-native-datepicker'
@@ -10,9 +10,7 @@ export default class AddTrip extends Component{
     constructor(props){
         super(props);
         this.state = {
-            userData : Array(),
-            startDate : "",
-            endDate : ""
+            userData : Array()
         }
     }
 
@@ -51,7 +49,7 @@ export default class AddTrip extends Component{
                     if (values.destination === '' || values.start_date === '' || values.end_date === '' || values.airline === '' || values.reservationCode === '' || values.startTime === '' || values.endTime === '') {
                         Alert.alert(
                             "Error",
-                            "Favor llenar todos los campos",
+                            "Favor ingresar todos los datos",
                             [
                               {
                                 text: "OK",
