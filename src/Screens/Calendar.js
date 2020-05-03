@@ -1,9 +1,20 @@
 import {CalendarList} from 'react-native-calendars';
+import {LocaleConfig} from 'react-native-calendars';
 import React, { Component } from 'react';
 import { AsyncStorage, Clipboard, View, Text, Linking, Modal, StyleSheet, ScrollView, ToastAndroid } from 'react-native';
 import { Card, Button } from 'react-native-elements'
 import { Ionicons } from '@expo/vector-icons';
 import moment from 'moment';
+
+LocaleConfig.locales['es'] = {
+  monthNames: ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Juilio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'],
+  monthNamesShort: ['Ene','Feb','Mar','Abr','May','Jun','Jul','Ago','Sep','Oct','Nov','Dec'],
+  dayNames: ['Lunes','Martes','Miercoles','Jueves','Viernes','Sabado','Domingo'],
+  dayNamesShort: ['Lun','Mar','Mie','Jue','Vie','Sab','Dom'],
+  today: 'Hoy'
+};
+
+LocaleConfig.defaultLocale = 'es';
 
 export default class CalendarTravel extends Component {
 
@@ -171,8 +182,8 @@ export default class CalendarTravel extends Component {
             <Card containerStyle={{width: '93%', borderRadius:20, borderWidth: 1 }}
               title={<Text style={{textAlign:'center', paddingBottom: 15, fontSize: 20}}>¿Desea eliminar el viaje seleccionado?</Text>}>
               <Text style={{marginBottom: 10}}>DESTINO: {this.state.actualTrip.destination}</Text>
-              <Text style={{marginBottom: 10}}>INICIO: {this.state.actualTrip.start_date} {this.state.actualTrip.startTime}</Text>
-              <Text style={{marginBottom: 10}}>TERMINO: {this.state.actualTrip.end_date} {this.state.actualTrip.endTime}</Text>
+              <Text style={{marginBottom: 10}}>INICIO: {moment(this.state.actualTrip.start_date).format('l')} , {this.state.actualTrip.startTime}</Text>
+              <Text style={{marginBottom: 10}}>TERMINO: {moment(this.state.actualTrip.end_date).format('l')} , {this.state.actualTrip.endTime}</Text>
               <ScrollView horizontal={false}>
                 <View style={styles.buttonContainer}>
                 <Button title="SI" buttonStyle={{ backgroundColor:'#ED8C72', borderColor: '#ED8C72', borderRadius:15, borderWidth: 1, width: '80%', height: '75%', alignSelf: 'center' }} 
@@ -192,9 +203,9 @@ export default class CalendarTravel extends Component {
           <View style = {styles.modal}>  
             <Card containerStyle={{width: '93%', borderRadius:20, borderWidth: 1 }}
               title={<Text style={{textAlign:'center', paddingBottom: 15, fontSize: 20}}>{this.state.actualTrip.destination}</Text>}>
-              <Text style={{marginBottom: 10}}>INICIO: {this.state.actualTrip.start_date} {this.state.actualTrip.startTime}</Text>
-              <Text style={{marginBottom: 10}}>TERMINO: {this.state.actualTrip.end_date} {this.state.actualTrip.endTime}</Text>
-              <Text style={{marginBottom: 10}}>AEROLINEA: {this.state.actualTrip.airline}</Text>
+              <Text style={{marginBottom: 10}}>INICIO: {moment(this.state.actualTrip.start_date).format('l')} , {this.state.actualTrip.startTime}</Text>
+              <Text style={{marginBottom: 10}}>TERMINO: {moment(this.state.actualTrip.end_date).format('l')} , {this.state.actualTrip.endTime}</Text>
+              <Text style={{marginBottom: 10}}>AEROLÍNEA: {this.state.actualTrip.airline}</Text>
               <ScrollView horizontal={false}>
               <View  style={styles.textButtonContainer}>
               <Text style={{marginBottom: 10}}>RESERVA: {this.state.actualTrip.reservationCode}</Text>
@@ -223,10 +234,13 @@ export default class CalendarTravel extends Component {
         <CalendarList
             horizontal={true}
             pagingEnabled={true}
-            firstDay={1}
+            firstDay={0}
             onDayPress={(day) => {this.showData(day)}}
             markedDates={this.state.formatedTrips}
             markingType={'period'}
+            style={{
+              height: '70%'
+            }}
             theme={{
               'stylesheet.day.period': {
                 base: {
@@ -235,7 +249,9 @@ export default class CalendarTravel extends Component {
                   alignItems: 'center',
                   width: 38,
                 }
-              }
+              },
+              todayTextColor: '#2988BC',
+              textMonthFontWeight: 'bold',
             }}
         />
         </View>
