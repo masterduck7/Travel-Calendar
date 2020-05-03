@@ -162,13 +162,11 @@ export default class CalendarTravel extends Component {
         // Add non working days
         else if('' === child.destination && '' === child.reservationCode && '' === ed && 
           '' === child.airline && '' === child.startTime && '' === child.endTime ){
-            console.log("A")
             newData[sd] = non_working_day;
             nonWorkingDays.push(sd)
         }
         // Check one day vacation
         else if (sd === ed) {
-          console.log("AA")
           // Check non working days
           if (!nonWorkingDays.includes(sd) && !nonWorkingDays.includes(ed)) {
             newData[sd] = vacation_one;
@@ -178,7 +176,6 @@ export default class CalendarTravel extends Component {
           }
         // Check longer vacation
         }else{
-          console.log("AAA")
           // Check non working days
           // Check start date
           if (!nonWorkingDays.includes(sd)) {
@@ -206,7 +203,6 @@ export default class CalendarTravel extends Component {
           }
         }
       })
-      console.log(newData)
       this.setState({
         formatedTrips: newData,
         tripsData: data
@@ -221,7 +217,7 @@ export default class CalendarTravel extends Component {
         if (actual.destination === child.destination && actual.reservationCode === child.reservationCode && 
           actual.start_date === child.start_date && actual.end_date === child.end_date && 
           actual.airline === child.airline && actual.startTime === child.startTime && actual.endTime === child.endTime ) {
-          console.log("FOUND")
+          console.log("Viaje encontrado y a eliminar. " , child.start_date , " - " , child.destination)
         }else{
           newData.push(child)
         }
