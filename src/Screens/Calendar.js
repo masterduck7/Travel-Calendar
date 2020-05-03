@@ -1,9 +1,20 @@
 import {CalendarList} from 'react-native-calendars';
+import {LocaleConfig} from 'react-native-calendars';
 import React, { Component } from 'react';
 import { AsyncStorage, Clipboard, View, Text, Linking, Modal, StyleSheet, ScrollView, ToastAndroid } from 'react-native';
 import { Card, Button } from 'react-native-elements'
 import { Ionicons } from '@expo/vector-icons';
 import moment from 'moment';
+
+LocaleConfig.locales['es'] = {
+  monthNames: ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Juilio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'],
+  monthNamesShort: ['Ene','Feb','Mar','Abr','May','Jun','Jul','Ago','Sep','Oct','Nov','Dec'],
+  dayNames: ['Lunes','Martes','Miercoles','Jueves','Viernes','Sabado','Domingo'],
+  dayNamesShort: ['Lun','Mar','Mie','Jue','Vie','Sab','Dom'],
+  today: 'Hoy'
+};
+
+LocaleConfig.defaultLocale = 'es';
 
 export default class CalendarTravel extends Component {
 
@@ -223,7 +234,7 @@ export default class CalendarTravel extends Component {
         <CalendarList
             horizontal={true}
             pagingEnabled={true}
-            firstDay={1}
+            firstDay={0}
             onDayPress={(day) => {this.showData(day)}}
             markedDates={this.state.formatedTrips}
             markingType={'period'}
