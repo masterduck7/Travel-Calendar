@@ -168,6 +168,7 @@ export default class AddTrip extends Component{
                     placeholder="Reserva"
                     onChangeText={handleChange('reservationCode')}
                     value={values.reservationCode}
+                    autoCapitalize='characters'
                 />
                 <TouchableOpacity
                     onPress={handleSubmit}
