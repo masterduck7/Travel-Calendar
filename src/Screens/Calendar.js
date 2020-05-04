@@ -263,7 +263,11 @@ export default class CalendarTravel extends Component {
       return(
         <View>
         {/* Modal Remove Trip */}
-        <Modal visible={this.state.modalRemove} transparent={true} animationType = {"slide"}>
+        <Modal
+        visible={this.state.modalRemove}
+        transparent={true}
+        animationType = {"slide"}
+        onRequestClose={() => this.setState({ modalRemove: false })}>
         <View style = {styles.modal}>  
             <Card containerStyle={{width: '93%', borderRadius:20, borderWidth: 1 }}
               title={<Text style={{textAlign:'center', paddingBottom: 15, fontSize: 20}}>¿Desea eliminar el viaje seleccionado?</Text>}>
@@ -282,7 +286,11 @@ export default class CalendarTravel extends Component {
         </View>
         </Modal>
         {/* Modal Details Non Working Day */}
-        <Modal visible={this.state.modalNonWorkingDay} transparent={true} animationType = {"slide"}>
+        <Modal
+        visible={this.state.modalNonWorkingDay}
+        transparent={true}
+        animationType = {"slide"}
+        onRequestClose={() => this.setState({ modalNonWorkingDay: false })}>
         <View style = {styles.modal}>  
             <Card containerStyle={{width: '93%', borderRadius:20, borderWidth: 1 }}
               title={<Text style={{textAlign:'center', paddingBottom: 15, fontSize: 25}}>Día no laboral !!!</Text>}>
@@ -302,7 +310,8 @@ export default class CalendarTravel extends Component {
         <Modal            
             animationType = {"slide"}  
             transparent = {true}  
-            visible = {this.state.modalDetail}  
+            visible = {this.state.modalDetail} 
+            onRequestClose={() => this.setState({ modalDetail: false })} 
         >  
           <View style = {styles.modal}>  
             <Card containerStyle={{width: '93%', borderRadius:20, borderWidth: 1 }}
