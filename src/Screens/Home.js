@@ -25,7 +25,11 @@ export default class Home extends Component {
     return(
       <View style={styles.container}>
 
-        <Modal visible={this.state.modalRemove} transparent={true} animationType = {"slide"}>
+        <Modal
+        visible={this.state.modalRemove}
+        transparent={true}
+        animationType = {"slide"}
+        onRequestClose={() => this.setState({ modalRemove: false })}>
         <View style = {styles.modal}>  
             <Card containerStyle={{width: '93%', borderRadius:20, borderWidth: 1 }}
               title={<Text style={{textAlign:'center', paddingBottom: 15, fontSize: 20}}>¿Desea borrar todos los viajes ingresados?</Text>}>

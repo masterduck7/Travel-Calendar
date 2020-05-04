@@ -36,7 +36,8 @@ export default class CalendarTravel extends Component {
         },
         actualAirline: '',
         modalDetail: false,
-        modalRemove: false
+        modalRemove: false,
+        modalNonWorkingDay: false
       }
     }
 
@@ -67,12 +68,7 @@ export default class CalendarTravel extends Component {
       let selectedTrip = []
       Array.from(data, child => {
         const compare = (child.start_date === day || child.end_date === day )
-        // Check if selected day is a non working day
-        if ('' === child.destination && '' === child.reservationCode && '' === child.end_date && 
-        '' === child.airline && '' === child.startTime && '' === child.endTime ){
-          console.log("This day is non working day")
-        }
-        else if (compare) {
+        if (compare) {
           selectedTrip = {
             destination: child.destination,
             start_date: child.start_date,
@@ -94,32 +90,48 @@ export default class CalendarTravel extends Component {
       if (this.state.tripsData !== [] && formated[day.dateString] !== undefined ) {
         let sTrip = this.findDate(day.dateString, this.state.tripsData)
         if (sTrip.length !== 0) {
-          let airline = ''
-          if (sTrip.airline === "Jetsmart") {
-            airline = 'https://www.jetsmart.cl'
+          if ('' === sTrip.destination && '' === sTrip.reservationCode && '' === sTrip.end_date && 
+          '' === sTrip.airline && '' === sTrip.startTime && '' === sTrip.endTime ) {
+            this.setState({
+              actualTrip: {
+                destination: '',
+                start_date: sTrip.start_date,
+                end_date: '',
+                startTime: '',
+                endTime: '',
+                airline: '',
+                reservationCode: '',
+              },
+              modalNonWorkingDay: true
+            })
+          } else {
+            let airline = ''
+            if (sTrip.airline === "Jetsmart") {
+              airline = 'https://www.jetsmart.cl'
+            }
+            else if (sTrip.airline === "Latam"){
+              airline = "https://www.latam.cl"
+            }
+            else if (sTrip.airline === "Sky Airlines"){
+              airline = "https://www.latam.cl"
+            }
+            else{
+              airline = "https://www.google.com/search?q=" + sTrip.airline
+            }
+            this.setState({
+              actualTrip: {
+                destination: sTrip.destination,
+                start_date: sTrip.start_date,
+                end_date: sTrip.end_date,
+                startTime: sTrip.startTime,
+                endTime: sTrip.endTime,
+                airline: sTrip.airline,
+                reservationCode: sTrip.reservationCode
+              },
+              actualAirline: airline,
+              modalDetail: !this.state.modalDetail
+            })
           }
-          else if (sTrip.airline === "Latam"){
-            airline = "https://www.latam.cl"
-          }
-          else if (sTrip.airline === "Sky Airlines"){
-            airline = "https://www.latam.cl"
-          }
-          else{
-            airline = "https://www.google.com/search?q=" + sTrip.airline
-          }
-          this.setState({
-            actualTrip: {
-              destination: sTrip.destination,
-              start_date: sTrip.start_date,
-              end_date: sTrip.end_date,
-              startTime: sTrip.startTime,
-              endTime: sTrip.endTime,
-              airline: sTrip.airline,
-              reservationCode: sTrip.reservationCode
-            },
-            actualAirline: airline,
-            modalDetail: !this.state.modalDetail
-          })
         }
       }else{
         console.log("NO DATA")
@@ -228,10 +240,34 @@ export default class CalendarTravel extends Component {
       this.setState({ modalDetail: false, modalRemove: false })
     }
 
+    removeNonWorkingDay(){
+      const data = this.state.tripsData
+      const actual = this.state.actualTrip
+      let newData = []
+      Array.from(data, child => {
+        if (actual.destination === child.destination && actual.reservationCode === child.reservationCode && 
+          actual.start_date === child.start_date && actual.end_date === child.end_date && 
+          actual.airline === child.airline && actual.startTime === child.startTime && actual.endTime === child.endTime ) {
+          console.log("Día no laboral encontrado y a eliminar. " , child.start_date)
+        }else{
+          newData.push(child)
+        }
+      })
+      this.formatData(newData)
+      this._storeData(newData)
+      ToastAndroid.show("Día no laboral eliminado", ToastAndroid.SHORT);
+      this.setState({ modalNonWorkingDay: false })
+    }
+
     render(){
       return(
         <View>
-        <Modal visible={this.state.modalRemove} transparent={true} animationType = {"slide"}>
+        {/* Modal Remove Trip */}
+        <Modal
+        visible={this.state.modalRemove}
+        transparent={true}
+        animationType = {"slide"}
+        onRequestClose={() => this.setState({ modalRemove: false })}>
         <View style = {styles.modal}>  
             <Card containerStyle={{width: '93%', borderRadius:20, borderWidth: 1 }}
               title={<Text style={{textAlign:'center', paddingBottom: 15, fontSize: 20}}>¿Desea eliminar el viaje seleccionado?</Text>}>
@@ -249,10 +285,33 @@ export default class CalendarTravel extends Component {
             </Card>
         </View>
         </Modal>
+        {/* Modal Details Non Working Day */}
+        <Modal
+        visible={this.state.modalNonWorkingDay}
+        transparent={true}
+        animationType = {"slide"}
+        onRequestClose={() => this.setState({ modalNonWorkingDay: false })}>
+        <View style = {styles.modal}>  
+            <Card containerStyle={{width: '93%', borderRadius:20, borderWidth: 1 }}
+              title={<Text style={{textAlign:'center', paddingBottom: 15, fontSize: 25}}>Día no laboral !!!</Text>}>
+              <Text style={{ fontSize: 20, textAlign:'center', marginBottom: 10}}>{moment(this.state.actualTrip.start_date).format("DD/MM/YY")}</Text>
+              <ScrollView horizontal={false}>
+                <View style={styles.buttonContainer}>
+                <Button title="ELIMINAR" buttonStyle={{ backgroundColor:'#ED8C72', borderColor: '#ED8C72', borderRadius:15, borderWidth: 1, width: '80%', height: '75%', alignSelf: 'center' }} 
+                onPress = {() => {this.removeNonWorkingDay()}}/>
+                <Button title="CANCELAR" buttonStyle={{ backgroundColor:'#2F496E', borderColor: '#2F496E', borderRadius:15, borderWidth: 1, width: '80%', height: '75%', alignSelf: 'center' }} onPress = {() => {  
+                  this.setState({ modalNonWorkingDay: false })}}/>
+                </View>
+              </ScrollView>
+            </Card>
+        </View>
+        </Modal>
+        {/* Modal Details Trip */}
         <Modal            
             animationType = {"slide"}  
             transparent = {true}  
-            visible = {this.state.modalDetail}  
+            visible = {this.state.modalDetail} 
+            onRequestClose={() => this.setState({ modalDetail: false })} 
         >  
           <View style = {styles.modal}>  
             <Card containerStyle={{width: '93%', borderRadius:20, borderWidth: 1 }}
