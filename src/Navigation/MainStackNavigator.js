@@ -17,17 +17,21 @@ function MainStackNavigator() {
           gestureEnabled: true
         }}>
             <Stack.Screen name='Home' component={Home}
+            // options={{
+            //     title: 'Inicio',
+            //     headerStyle: {
+            //         backgroundColor: '#2F496E'
+            //     },
+            //     headerTintColor: '#fff',
+            //     headerTitleStyle: {
+            //         fontWeight: 'bold'
+            //     },
+            //     headerTitleAlign:"center"
+            // }}
             options={{
-                title: 'Inicio',
-                headerStyle: {
-                    backgroundColor: '#2F496E'
-                },
-                headerTintColor: '#fff',
-                headerTitleStyle: {
-                    fontWeight: 'bold'
-                },
-                headerTitleAlign:"center"
-            }}/>
+                headerShown: false
+            }}
+            />
             <Stack.Screen name='Calendar' component={Calendar}
             options={{
                 title: 'Calendario',
