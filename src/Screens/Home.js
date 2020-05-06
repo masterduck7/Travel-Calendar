@@ -31,7 +31,7 @@ export default class Home extends Component {
         animationType = {"slide"}
         onRequestClose={() => this.setState({ modalRemove: false })}>
         <View style = {styles.modal}>  
-            <Card containerStyle={{width: '93%', borderRadius:20, borderWidth: 1 }}
+            <Card containerStyle={{width: '95%', left: 2, borderRadius:20, borderWidth: 1 }}
               title={<Text style={{textAlign:'center', paddingBottom: 15, fontSize: 20}}>¿Desea borrar todos los viajes ingresados?</Text>}>
                 <Image source={CancelledFlight} resizeMethod="resize" resizeMode="contain" alignSelf="center" style={{width:140, height:140}} /> 
                 <Text></Text>
@@ -51,8 +51,8 @@ export default class Home extends Component {
         </View>
         </Modal>
 
-        <Text style={{color: '#888', fontSize: 50, top: 20 }}>Travel Calendar</Text>
-        <Image source={Travel} resizeMethod="resize" resizeMode="stretch" style={{top: 20}} /> 
+        <Text style={{color: '#888', fontSize: 50, top: 80 }}>Travel Calendar</Text>
+        <Image source={Travel} resizeMethod="resize" resizeMode="stretch" style={{top: 100}} /> 
         <TouchableOpacity
           onPress={() => this.props.navigation.navigate('Calendar')}
           style={styles.button}>
@@ -61,12 +61,12 @@ export default class Home extends Component {
         <View style={styles.textButtonContainer}>
           <TouchableOpacity
             onPress={() => this.props.navigation.navigate('AddTrip')}
-            style={{...styles.button, left: -2, height: 50, top: -50, backgroundColor: '#2988BC' }}>
+            style={{...styles.button, left: -2, height: 50, top: 20, backgroundColor: '#2988BC' }}>
             <Text style={styles.text}>Añadir Viaje</Text>
           </TouchableOpacity>
           <TouchableOpacity
             onPress={() => this.props.navigation.navigate('AddNoWorkDay')}
-            style={{...styles.button, left: 5, height: 50, top: -50, backgroundColor: '#2988BC' }}>
+            style={{...styles.button, left: 5, height: 50, top: 20, backgroundColor: '#2988BC' }}>
             <Text style={styles.text}>Añadir Día no laboral</Text>
           </TouchableOpacity>
         </View>
@@ -86,12 +86,12 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#F4EADE',
     alignItems: 'center',
-    justifyContent: 'center',
+    justifyContent: 'center'
   },
   button:{
     backgroundColor: '#006C84',
     padding: 10,
-    top: 80,
+    top: 170,
     borderRadius: 5
   },
   text: {
