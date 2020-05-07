@@ -119,6 +119,7 @@ export default class AddTrip extends Component{
                     style={{width: '50%', paddingTop: 10}}
                     date={values.startTime}
                     onDateChange={handleChange('startTime')}
+                    placeholder="Vuelo Ida"
                     customStyles={{
                     dateIcon: {
                         position: 'absolute',
@@ -149,6 +150,7 @@ export default class AddTrip extends Component{
                     style={{width: '50%', paddingTop: 10}}
                     date={values.endTime}
                     onDateChange={handleChange('endTime')}
+                    placeholder="Vuelo regreso"
                     customStyles={{
                     dateIcon: {
                         position: 'absolute',

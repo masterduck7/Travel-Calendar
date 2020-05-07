@@ -58,7 +58,7 @@ function MainStackNavigator() {
             }}/>
             <Stack.Screen name='AddNoWorkDay' component={AddNoWorkDay}
             options={{
-                title: 'Añadir Día no laboral',
+                title: 'Añadir Día Festivo',
                 headerStyle: {
                     backgroundColor: '#2F496E'
                 },

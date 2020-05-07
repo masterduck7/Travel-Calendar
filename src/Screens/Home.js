@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { AsyncStorage, Image, Modal, ScrollView, StyleSheet, Text, ToastAndroid, TouchableOpacity, View } from 'react-native';
 import { Button, Card } from 'react-native-elements'
+import { FontAwesome } from '@expo/vector-icons'; 
 import Travel from '../../assets/Travel.png';
 import CancelledFlight from '../../assets/CancelledFlight.png';
 
@@ -62,17 +63,23 @@ export default class Home extends Component {
           <TouchableOpacity
             onPress={() => this.props.navigation.navigate('AddTrip')}
             style={{...styles.button, left: -2, height: 50, top: 20, backgroundColor: '#2988BC' }}>
-            <Text style={styles.text}>Añadir Viaje</Text>
+            <View style={{flex: 1, flexDirection: 'row',marginRight: 10}}>
+              <FontAwesome name="calendar-plus-o" size={30} color="black" />
+              <Text style={{...styles.text, left: 10, color: 'black'}}>Viaje</Text>
+            </View>
           </TouchableOpacity>
           <TouchableOpacity
             onPress={() => this.props.navigation.navigate('AddNoWorkDay')}
             style={{...styles.button, left: 5, height: 50, top: 20, backgroundColor: '#2988BC' }}>
-            <Text style={styles.text}>Añadir Día no laboral</Text>
+            <View style={{flex: 1, flexDirection: 'row',marginRight: 10}}>
+              <FontAwesome name="calendar-plus-o" size={30} color="black" />
+              <Text style={{...styles.text, left: 10, color: 'black'}}>Festivo</Text>
+            </View>
           </TouchableOpacity>
         </View>
         <TouchableOpacity
           onPress={() => this.setState({modalRemove:true})}
-          style={{...styles.button, top: -120, backgroundColor: '#2F496E' }}>
+          style={{...styles.button, top: -150, backgroundColor: '#2F496E' }}>
           <Text style={styles.text}>Borrar datos</Text>
         </TouchableOpacity>
         <Text style={{ top: -50, color: '#888'}}>BY LPSoftware</Text>
@@ -92,6 +99,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#006C84',
     padding: 10,
     top: 170,
+    left: -15,
     borderRadius: 5
   },
   text: {
@@ -117,6 +125,7 @@ const styles = StyleSheet.create({
   textButtonContainer:{
     flex: 1,
     flexDirection: 'row',
-    marginTop: 180
+    marginTop: 180,
+    left: -5
   }
 });

@@ -69,21 +69,21 @@ export default class AddNoWorkDay extends Component{
                             newData.push(values)
                         }
                         {this._storeData(newData)}
-                        ToastAndroid.show("Día no laboral agregado", ToastAndroid.SHORT);
+                        ToastAndroid.show("Día Festivo agregado", ToastAndroid.SHORT);
                         {this.props.navigation.navigate('Home')}
                     }
                 }}
             >
             {({ handleChange, handleBlur, handleSubmit, values }) => (
                 <View style={{alignItems:'center'}}>
-                <Text style={{ paddingTop:10, color: '#888', fontSize: 20}}>Día no laboral:</Text>
+                <Text style={{ paddingTop:10, color: '#888', fontSize: 20}}>Día Festivo:</Text>
                 <DatePicker
-                    style={{width: '50%'}}
+                    style={{width: '50%', marginTop: 30}}
                     date={values.start_date}
-                    placeholder="Día no laboral"
                     onDateChange={handleChange('start_date')}
                     mode="date"
                     format="YYYY-MM-DD"
+                    placeholder="Día no laboral"
                     customStyles={{
                     dateIcon: {
                         position: 'absolute',
