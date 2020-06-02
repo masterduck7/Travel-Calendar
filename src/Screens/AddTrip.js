@@ -194,7 +194,7 @@ const styles = StyleSheet.create({
     buttonSubmit: {
         marginTop: hp("3%"),
         backgroundColor: '#d1625a',
-        padding: hp("1.5%"),
+        padding: hp("1.2%"),
         alignSelf:"center",
         borderRadius: hp("1%")
     },
