@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Alert, AsyncStorage, ScrollView, StyleSheet, Text, ToastAndroid, TouchableOpacity, View } from 'react-native';
 import { Formik } from 'formik';
 import DatePicker from 'react-native-datepicker'
+import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
 
 export default class AddNoWorkDay extends Component{
 
@@ -69,33 +70,32 @@ export default class AddNoWorkDay extends Component{
                             newData.push(values)
                         }
                         {this._storeData(newData)}
-                        ToastAndroid.show("Día no laboral agregado", ToastAndroid.SHORT);
+                        ToastAndroid.show("Día Festivo agregado", ToastAndroid.SHORT);
                         {this.props.navigation.navigate('Home')}
                     }
                 }}
             >
             {({ handleChange, handleBlur, handleSubmit, values }) => (
                 <View style={{alignItems:'center'}}>
-                <Text style={{ paddingTop:10, color: '#888', fontSize: 20}}>Día no laboral:</Text>
+                <Text style={styles.textInput}>Día Festivo:</Text>
                 <DatePicker
-                    style={{width: '50%'}}
+                    style={{width: wp("50%"), marginTop: hp("3%")}}
                     date={values.start_date}
-                    placeholder="Día no laboral"
                     onDateChange={handleChange('start_date')}
                     mode="date"
                     format="YYYY-MM-DD"
+                    placeholder="Día no laboral"
                     customStyles={{
                     dateIcon: {
                         position: 'absolute',
-                        left: -40,
-                        marginLeft: 0
+                        left: wp("-10%")
                     }
                     }}
                 />
                 <TouchableOpacity
                     onPress={handleSubmit}
                     style={styles.buttonSubmit}>
-                    <Text style={{ fontSize: 20, color: '#fff' }}>Agregar</Text>
+                    <Text style={{ fontSize: wp("5%"), color: '#fff' }}>Agregar</Text>
                 </TouchableOpacity>
                 </View>
             )}
@@ -115,10 +115,15 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     buttonSubmit: {
-        marginTop:40,
+        marginTop: hp("3%"),
         backgroundColor: '#d1625a',
-        padding: 10,
+        padding: hp("1.2%"),
         alignSelf:"center",
-        borderRadius: 5
+        borderRadius: hp("1%")
+    },
+    textInput:{
+        paddingTop: hp("1.5%"),
+        color: '#888',
+        fontSize: wp("4.5%")
     }
 });

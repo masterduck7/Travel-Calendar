@@ -4,6 +4,7 @@ import { Input } from 'react-native-elements';
 import { Formik } from 'formik';
 import DatePicker from 'react-native-datepicker'
 import moment from 'moment';
+import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
 
 export default class AddTrip extends Component{
 
@@ -91,15 +92,15 @@ export default class AddTrip extends Component{
             >
             {({ handleChange, handleBlur, handleSubmit, values }) => (
                 <View style={{alignItems:'center'}}>
-                <Text style={{ paddingTop:10, color: '#888', fontSize: 20}}>Destino:</Text>
+                <Text style={styles.textInput}>Destino:</Text>
                 <Input
                     placeholder="Destino"
                     onChangeText={handleChange('destination')}
                     value={values.destination}
                 />
-                <Text style={{ paddingTop:10, color: '#888', fontSize: 20}}>Fecha Ida:</Text>
+                <Text style={styles.textInput}>Fecha Ida:</Text>
                 <DatePicker
-                    style={{width: '50%'}}
+                    style={styles.input}
                     date={values.start_date}
                     placeholder="Inicio viaje"
                     onDateChange={handleChange('start_date')}
@@ -108,28 +109,27 @@ export default class AddTrip extends Component{
                     customStyles={{
                     dateIcon: {
                         position: 'absolute',
-                        left: -40,
-                        marginLeft: 0
+                        left: wp("-10%")
                     }
                     }}
                 />
-                <Text style={{ paddingTop:10, color: '#888', fontSize: 20}}>Horario:</Text>
+                <Text style={styles.textInput}>Horario:</Text>
                 <DatePicker
                     mode="time"
-                    style={{width: '50%', paddingTop: 10}}
+                    style={styles.input}
                     date={values.startTime}
                     onDateChange={handleChange('startTime')}
+                    placeholder="Vuelo Ida"
                     customStyles={{
                     dateIcon: {
                         position: 'absolute',
-                        left: -40,
-                        marginLeft: 0
+                        left: wp("-10%")
                     }
                     }}
                 />
-                <Text style={{ paddingTop:10, color: '#888', fontSize: 20}}>Fecha Vuelta:</Text>
+                <Text style={styles.textInput}>Fecha Vuelta:</Text>
                 <DatePicker
-                    style={{width: '50%'}}
+                    style={styles.input}
                     date={values.end_date}
                     placeholder="Fin viaje"
                     onDateChange={handleChange('end_date')}
@@ -138,32 +138,31 @@ export default class AddTrip extends Component{
                     customStyles={{
                     dateIcon: {
                         position: 'absolute',
-                        left: -40,
-                        marginLeft: 0
+                        left: wp("-10%")
                     }
                     }}
                 />
-                <Text style={{ paddingTop:10, color: '#888', fontSize: 20}}>Horario:</Text>
+                <Text style={styles.textInput}>Horario:</Text>
                 <DatePicker
                     mode="time"
-                    style={{width: '50%', paddingTop: 10}}
+                    style={styles.input}
                     date={values.endTime}
                     onDateChange={handleChange('endTime')}
+                    placeholder="Vuelo regreso"
                     customStyles={{
                     dateIcon: {
                         position: 'absolute',
-                        left: -40,
-                        marginLeft: 0
+                        left: wp("-10%")
                     }
                     }}
                 />
-                <Text style={{ paddingTop:10, color: '#888', fontSize: 20}}>Aerolínea:</Text>
+                <Text style={styles.textInput}>Aerolínea:</Text>
                 <Input
                     placeholder="Aerolinea"
                     onChangeText={handleChange('airline')}
                     value={values.airline}
                 />
-                <Text style={{ paddingTop:10, color: '#888', fontSize: 20}}>Código de Reserva:</Text>
+                <Text style={styles.textInput}>Código de Reserva:</Text>
                 <Input
                     placeholder="Reserva"
                     onChangeText={handleChange('reservationCode')}
@@ -173,7 +172,7 @@ export default class AddTrip extends Component{
                 <TouchableOpacity
                     onPress={handleSubmit}
                     style={styles.buttonSubmit}>
-                    <Text style={{ fontSize: 20, color: '#fff' }}>Agregar</Text>
+                    <Text style={{ fontSize: wp("5%"), color: '#fff' }}>Agregar</Text>
                 </TouchableOpacity>
                 </View>
             )}
@@ -192,19 +191,20 @@ const styles = StyleSheet.create({
         justifyContent: 'space-between',
         alignItems: 'center',
     },
-    buttonUsers:{
-        marginTop:10,
-        marginHorizontal:5,
-        backgroundColor: '#506280',
-        padding: 10,
-        alignSelf:"center",
-        borderRadius: 5
-    },
     buttonSubmit: {
-        marginTop:40,
+        marginTop: hp("3%"),
         backgroundColor: '#d1625a',
-        padding: 10,
+        padding: hp("1.2%"),
         alignSelf:"center",
-        borderRadius: 5
+        borderRadius: hp("1%")
+    },
+    textInput:{
+        paddingTop: hp("1.5%"),
+        color: '#888',
+        fontSize: wp("4.5%")
+    },
+    input:{
+        width: wp("50%"),
+        paddingTop: hp("1%")
     }
 });

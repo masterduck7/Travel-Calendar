@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { AsyncStorage, Image, Modal, ScrollView, StyleSheet, Text, ToastAndroid, TouchableOpacity, View } from 'react-native';
 import { Button, Card } from 'react-native-elements'
+import { FontAwesome } from '@expo/vector-icons'; 
+import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
 import Travel from '../../assets/Travel.png';
 import CancelledFlight from '../../assets/CancelledFlight.png';
 
@@ -31,19 +33,19 @@ export default class Home extends Component {
         animationType = {"slide"}
         onRequestClose={() => this.setState({ modalRemove: false })}>
         <View style = {styles.modal}>  
-            <Card containerStyle={{width: '95%', left: 2, borderRadius:20, borderWidth: 1 }}
-              title={<Text style={{textAlign:'center', paddingBottom: 15, fontSize: 20}}>¿Desea borrar todos los viajes ingresados?</Text>}>
-                <Image source={CancelledFlight} resizeMethod="resize" resizeMode="contain" alignSelf="center" style={{width:140, height:140}} /> 
+            <Card containerStyle={{width: wp("90%"), borderRadius: wp("5%"), borderWidth: 1 }}
+              title={<Text style={{textAlign:'center', paddingBottom: hp("1%"), fontSize: wp("5%")}}>¿Desea borrar todos los viajes ingresados?</Text>}>
+                <Image source={CancelledFlight} resizeMethod="resize" resizeMode="contain" alignSelf="center" style={{width: wp("30%"), height: hp("15%")}} /> 
                 <Text></Text>
               <ScrollView horizontal={false}>
                 <View style={styles.buttonContainer}>
-                <Button title="SI" buttonStyle={{ backgroundColor:'#ED8C72', borderColor: '#ED8C72', borderRadius:15, borderWidth: 1, width: '80%', height: '75%', alignSelf: 'center' }} 
+                <Button title="SI" buttonStyle={{ ...styles.buttonConfirm, backgroundColor:'#ED8C72', borderColor: '#ED8C72', left: wp("0%") }} 
                 onPress = {() => {
                   this._clearData()
                   ToastAndroid.show("Viajes eliminados", ToastAndroid.SHORT);
                   this.setState({modalRemove:false})
                 }}/>
-                <Button title="NO" buttonStyle={{ backgroundColor:'#2F496E', borderColor: '#2F496E', borderRadius:15, borderWidth: 1, width: '80%', height: '75%', alignSelf: 'center' }} onPress = {() => {  
+                <Button title="NO" buttonStyle={styles.buttonConfirm} onPress = {() => {  
                   this.setState({ modalRemove: false })}}/>
                 </View>
               </ScrollView>
@@ -51,8 +53,8 @@ export default class Home extends Component {
         </View>
         </Modal>
 
-        <Text style={{color: '#888', fontSize: 50, top: 80 }}>Travel Calendar</Text>
-        <Image source={Travel} resizeMethod="resize" resizeMode="stretch" style={{top: 100}} /> 
+        <Text style={{color: '#888', fontSize: wp("10%"), top: hp("10%") }}>Travel Calendar</Text>
+        <Image source={Travel} resizeMethod="resize" resizeMode="stretch" style={{top: hp("15%")}} /> 
         <TouchableOpacity
           onPress={() => this.props.navigation.navigate('Calendar')}
           style={styles.button}>
@@ -61,21 +63,27 @@ export default class Home extends Component {
         <View style={styles.textButtonContainer}>
           <TouchableOpacity
             onPress={() => this.props.navigation.navigate('AddTrip')}
-            style={{...styles.button, left: -2, height: 50, top: 20, backgroundColor: '#2988BC' }}>
-            <Text style={styles.text}>Añadir Viaje</Text>
+            style={{...styles.button, height: 50, top: hp("3%"), backgroundColor: '#2988BC' }}>
+            <View style={{flex: 1, flexDirection: 'row', marginRight: wp("2%")}}>
+              <FontAwesome name="calendar-plus-o" size={wp("7%")} color="black" />
+              <Text style={{...styles.text, left: wp("1%"), color: 'black'}}>Viaje</Text>
+            </View>
           </TouchableOpacity>
           <TouchableOpacity
             onPress={() => this.props.navigation.navigate('AddNoWorkDay')}
-            style={{...styles.button, left: 5, height: 50, top: 20, backgroundColor: '#2988BC' }}>
-            <Text style={styles.text}>Añadir Día no laboral</Text>
+            style={{...styles.button, left: wp("2%"), height: 50, top: hp("3%"), backgroundColor: '#2988BC' }}>
+            <View style={{flex: 1, flexDirection: 'row', marginRight: wp("2%")}}>
+              <FontAwesome name="calendar-plus-o" size={wp("7%")} color="black" />
+              <Text style={{...styles.text, left: wp("1%"), color: 'black'}}>Festivo</Text>
+            </View>
           </TouchableOpacity>
         </View>
         <TouchableOpacity
           onPress={() => this.setState({modalRemove:true})}
-          style={{...styles.button, top: -120, backgroundColor: '#2F496E' }}>
+          style={{...styles.button, top: hp("-19%"), backgroundColor: '#2F496E' }}>
           <Text style={styles.text}>Borrar datos</Text>
         </TouchableOpacity>
-        <Text style={{ top: -50, color: '#888'}}>BY LPSoftware</Text>
+        <Text style={{ top: hp("-5%"), color: '#888'}}>BY LPSoftware</Text>
       </View>
     );
   }
@@ -90,33 +98,41 @@ const styles = StyleSheet.create({
   },
   button:{
     backgroundColor: '#006C84',
-    padding: 10,
-    top: 170,
-    borderRadius: 5
+    padding: hp("1%"),
+    alignContent: "center",
+    top: hp("20%"),
+    borderRadius: hp("1%")
   },
   text: {
-    fontSize: 20,
+    fontSize: wp("5%"),
     color: '#fff'
   },
   modal: {  
     justifyContent: 'center',
     alignItems: 'center', 
     borderColor: '#fff',    
-    marginTop: 450,
-    marginBottom: 200,
-    width: '95%',
-    paddingBottom: 15,
-    marginLeft: 10
+    marginTop: hp("55%"),
+    width: wp('95%'),
+    margin: wp("2%")
   },
   buttonContainer:{
     flex: 1,
     flexDirection: 'row',
-    justifyContent: 'center',
-    top: 10
+    justifyContent: 'center'
   },
   textButtonContainer:{
     flex: 1,
     flexDirection: 'row',
-    marginTop: 180
+    marginTop: hp("23%")
+  },
+  buttonConfirm:{
+    backgroundColor:'#2F496E',
+    borderColor: '#2F496E',
+    borderRadius: wp("5%"),
+    borderWidth: 1,
+    width: wp("30%"),
+    left: wp("1%"),
+    height: '75%',
+    alignSelf: 'center'
   }
 });

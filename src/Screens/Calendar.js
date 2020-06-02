@@ -5,6 +5,7 @@ import { AsyncStorage, Clipboard, Linking, Modal, ScrollView, StyleSheet, Text, 
 import { Button, Card } from 'react-native-elements'
 import { Ionicons } from '@expo/vector-icons';
 import moment from 'moment';
+import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
 
 LocaleConfig.locales['es'] = {
   monthNames: ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Juilio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'],
@@ -22,7 +23,7 @@ export default class CalendarTravel extends Component {
       super(props);
       this.state = {
         tripsData : [],
-        formatedTrips: [],
+        formatedTrips: {},
         // Actual Trip to show details
         // Destination, Start date, End date, Airline, Reservation code
         actualTrip: {
@@ -269,16 +270,16 @@ export default class CalendarTravel extends Component {
         animationType = {"slide"}
         onRequestClose={() => this.setState({ modalRemove: false })}>
         <View style = {styles.modal}>  
-            <Card containerStyle={{width: '93%', borderRadius:20, borderWidth: 1 }}
-              title={<Text style={{textAlign:'center', paddingBottom: 15, fontSize: 20}}>¿Desea eliminar el viaje seleccionado?</Text>}>
-              <Text style={{marginBottom: 10}}>DESTINO: {this.state.actualTrip.destination}</Text>
-              <Text style={{marginBottom: 10}}>INICIO: {moment(this.state.actualTrip.start_date).format("DD/MM/YY")} , {this.state.actualTrip.startTime}</Text>
-              <Text style={{marginBottom: 10}}>TERMINO: {moment(this.state.actualTrip.end_date).format("DD/MM/YY")} , {this.state.actualTrip.endTime}</Text>
+          <Card containerStyle={{width: wp("90%"), borderRadius: wp("7%"), borderWidth: 1 }}
+              title={<Text style={{textAlign:'center', paddingBottom: hp("2%"), fontSize: wp("5%")}}>¿Desea eliminar el viaje seleccionado?</Text>}>
+              <Text style={{marginBottom: hp("1%")}}>DESTINO: {this.state.actualTrip.destination}</Text>
+              <Text style={{marginBottom: hp("1%")}}>INICIO: {moment(this.state.actualTrip.start_date).format("DD/MM/YY")} , {this.state.actualTrip.startTime}</Text>
+              <Text style={{marginBottom: hp("1%")}}>TERMINO: {moment(this.state.actualTrip.end_date).format("DD/MM/YY")} , {this.state.actualTrip.endTime}</Text>
               <ScrollView horizontal={false}>
                 <View style={styles.buttonContainer}>
-                <Button title="SI" buttonStyle={{ backgroundColor:'#ED8C72', borderColor: '#ED8C72', borderRadius:15, borderWidth: 1, width: '80%', height: '75%', alignSelf: 'center' }} 
+                <Button title="SI" buttonStyle={{ ...styles.buttonConfirm, backgroundColor:'#ED8C72', borderColor: '#ED8C72' }} 
                 onPress = {() => {this.removeActualTrip()}}/>
-                <Button title="NO" buttonStyle={{ backgroundColor:'#2F496E', borderColor: '#2F496E', borderRadius:15, borderWidth: 1, width: '80%', height: '75%', alignSelf: 'center' }} onPress = {() => {  
+                <Button title="NO" buttonStyle={{ ...styles.buttonConfirm }} onPress = {() => {  
                   this.setState({ modalRemove: false })}}/>
                 </View>
               </ScrollView>
@@ -292,14 +293,14 @@ export default class CalendarTravel extends Component {
         animationType = {"slide"}
         onRequestClose={() => this.setState({ modalNonWorkingDay: false })}>
         <View style = {styles.modal}>  
-            <Card containerStyle={{width: '93%', borderRadius:20, borderWidth: 1 }}
-              title={<Text style={{textAlign:'center', paddingBottom: 15, fontSize: 25}}>Día no laboral !!!</Text>}>
-              <Text style={{ fontSize: 20, textAlign:'center', marginBottom: 10}}>{moment(this.state.actualTrip.start_date).format("DD/MM/YY")}</Text>
+            <Card containerStyle={{width: wp("90%"), borderRadius: wp("7%"), borderWidth: 1 }}
+              title={<Text style={{textAlign:'center', paddingBottom: hp("2%"), fontSize: wp("5%")}}>Día no laboral !!!</Text>}>
+              <Text style={{ fontSize: wp("5%"), textAlign:'center', marginBottom: hp("1%")}}>{moment(this.state.actualTrip.start_date).format("DD/MM/YY")}</Text>
               <ScrollView horizontal={false}>
                 <View style={styles.buttonContainer}>
-                <Button title="ELIMINAR" buttonStyle={{ backgroundColor:'#ED8C72', borderColor: '#ED8C72', borderRadius:15, borderWidth: 1, width: '80%', height: '75%', alignSelf: 'center' }} 
+                <Button title="ELIMINAR" buttonStyle={{ ...styles.buttonConfirm, backgroundColor:'#ED8C72', borderColor: '#ED8C72' }} 
                 onPress = {() => {this.removeNonWorkingDay()}}/>
-                <Button title="CANCELAR" buttonStyle={{ backgroundColor:'#2F496E', borderColor: '#2F496E', borderRadius:15, borderWidth: 1, width: '80%', height: '75%', alignSelf: 'center' }} onPress = {() => {  
+                <Button title="CANCELAR" buttonStyle={styles.buttonConfirm} onPress = {() => {  
                   this.setState({ modalNonWorkingDay: false })}}/>
                 </View>
               </ScrollView>
@@ -314,15 +315,15 @@ export default class CalendarTravel extends Component {
             onRequestClose={() => this.setState({ modalDetail: false })} 
         >  
           <View style = {styles.modal}>  
-            <Card containerStyle={{width: '93%', borderRadius:20, borderWidth: 1 }}
-              title={<Text style={{textAlign:'center', paddingBottom: 15, fontSize: 20}}>{this.state.actualTrip.destination}</Text>}>
-              <Text style={{marginBottom: 10}}>INICIO: {moment(this.state.actualTrip.start_date).format("DD/MM/YY")} , {this.state.actualTrip.startTime}</Text>
-              <Text style={{marginBottom: 10}}>TERMINO: {moment(this.state.actualTrip.end_date).format("DD/MM/YY")} , {this.state.actualTrip.endTime}</Text>
-              <Text style={{marginBottom: 10}}>AEROLÍNEA: {this.state.actualTrip.airline}</Text>
+            <Card containerStyle={{width: wp("90%"), borderRadius: wp("5%"), borderWidth: 1 }}
+              title={<Text style={{textAlign:'center', paddingBottom: hp("2%"), fontSize: wp("5%")}}>{this.state.actualTrip.destination}</Text>}>
+              <Text style={{marginBottom: hp("1%")}}>INICIO: {moment(this.state.actualTrip.start_date).format("DD/MM/YY")} , {this.state.actualTrip.startTime}</Text>
+              <Text style={{marginBottom: hp("1%")}}>TERMINO: {moment(this.state.actualTrip.end_date).format("DD/MM/YY")} , {this.state.actualTrip.endTime}</Text>
+              <Text style={{marginBottom: hp("1%")}}>AEROLÍNEA: {this.state.actualTrip.airline}</Text>
               <ScrollView horizontal={false}>
               <View  style={styles.textButtonContainer}>
-              <Text style={{marginBottom: 10}}>RESERVA: {this.state.actualTrip.reservationCode}</Text>
-              <Ionicons name="md-copy" size={25} color="gray" style={{marginLeft: 10, top: -2}} 
+              <Text style={{marginBottom: hp("1%")}}>RESERVA: {this.state.actualTrip.reservationCode}</Text>
+              <Ionicons name="md-copy" size={wp("6%")} color="gray" style={{marginLeft: wp("2%")}} 
               onPress={() => {
                 Clipboard.setString(this.state.actualTrip.reservationCode)
                 ToastAndroid.show("Código de reserva copiado", ToastAndroid.SHORT);
@@ -331,13 +332,13 @@ export default class CalendarTravel extends Component {
               </ScrollView>
               <Button
                 onPress={() => Linking.openURL(this.state.actualAirline)}
-                buttonStyle={{backgroundColor:'#2988BC', borderColor: '#2988BC', borderRadius: 15, borderWidth: 1 , marginLeft: 0, marginRight: 0, marginBottom: 0}}
+                buttonStyle={{backgroundColor:'#2988BC', borderColor: '#2988BC', borderRadius: wp("5%"), borderWidth: 1}}
                 title='IR A RESERVA' />
               <ScrollView horizontal={false}>
               <View style={styles.buttonContainer}>
-              <Button title="ELIMINAR" buttonStyle={{ backgroundColor:'#ED8C72', borderColor: '#ED8C72', borderRadius:15, borderWidth: 1, width: '80%', height: '75%', alignSelf: 'center' }} 
+              <Button title="ELIMINAR" buttonStyle= {{...styles.buttonConfirm, backgroundColor:'#ED8C72', borderColor: '#ED8C72' }} 
               onPress = {() => this.setState({modalRemove: true, modalDetail: false}) }/>
-              <Button title="CERRAR" buttonStyle={{ backgroundColor:'#2F496E', borderColor: '#2F496E', borderRadius:15, borderWidth: 1, width: '80%', height: '75%', alignSelf: 'center' }} onPress = {() => {  
+              <Button title="CERRAR" buttonStyle={styles.buttonConfirm} onPress = {() => {  
                 this.setState({ modalDetail:!this.state.modalDetail})}}/>
               </View>
               </ScrollView>
@@ -352,7 +353,7 @@ export default class CalendarTravel extends Component {
             markedDates={this.state.formatedTrips}
             markingType={'period'}
             style={{
-              height: '70%'
+              height: hp("100%")
             }}
             theme={{
               'stylesheet.day.period': {
@@ -377,22 +378,30 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center', 
     borderColor: '#fff',    
-    marginTop: 500,
-    marginBottom: 100,
-    width: '95%',
-    paddingBottom: 15,
-    marginLeft: 10
+    marginTop: hp("55%"),
+    width: wp('95%'),
+    margin: wp("2%")
   },
   buttonContainer:{
     flex: 1,
     flexDirection: 'row',
     justifyContent: 'space-around',
-    top: 10
+    top: hp("1%")
   },
   textButtonContainer:{
     flex: 1,
     flexDirection: 'row',
     alignContent: 'space-between',
-    marginBottom: 10
+    marginBottom: hp("1%")
+  },
+  buttonConfirm:{
+    backgroundColor:'#2F496E',
+    borderColor: '#2F496E',
+    borderRadius: wp("5%"),
+    borderWidth: 1,
+    width: wp("30%"),
+    left: wp("1%"),
+    height: '75%',
+    alignSelf: 'center'
   }
 });
