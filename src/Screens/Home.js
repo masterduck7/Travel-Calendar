@@ -39,13 +39,13 @@ export default class Home extends Component {
                 <Text></Text>
               <ScrollView horizontal={false}>
                 <View style={styles.buttonContainer}>
-                <Button title="SI" buttonStyle={{ backgroundColor:'#ED8C72', borderColor: '#ED8C72', borderRadius: wp("5%"), borderWidth: 1, width: wp("30%"), height: '75%', alignSelf: 'center' }} 
+                <Button title="SI" buttonStyle={{ ...styles.buttonConfirm, backgroundColor:'#ED8C72', borderColor: '#ED8C72', left: wp("0%") }} 
                 onPress = {() => {
                   this._clearData()
                   ToastAndroid.show("Viajes eliminados", ToastAndroid.SHORT);
                   this.setState({modalRemove:false})
                 }}/>
-                <Button title="NO" buttonStyle={{ backgroundColor:'#2F496E', borderColor: '#2F496E', borderRadius: wp("5%"), borderWidth: 1, width: wp("30%"), left: wp("1%") , height: '75%', alignSelf: 'center' }} onPress = {() => {  
+                <Button title="NO" buttonStyle={styles.buttonConfirm} onPress = {() => {  
                   this.setState({ modalRemove: false })}}/>
                 </View>
               </ScrollView>
@@ -124,5 +124,15 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: 'row',
     marginTop: hp("23%")
+  },
+  buttonConfirm:{
+    backgroundColor:'#2F496E',
+    borderColor: '#2F496E',
+    borderRadius: wp("5%"),
+    borderWidth: 1,
+    width: wp("30%"),
+    left: wp("1%"),
+    height: '75%',
+    alignSelf: 'center'
   }
 });
