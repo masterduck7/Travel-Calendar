@@ -2,9 +2,9 @@ import React, { Component } from 'react';
 import { AsyncStorage, Image, Modal, ScrollView, StyleSheet, Text, ToastAndroid, TouchableOpacity, View } from 'react-native';
 import { Button, Card } from 'react-native-elements'
 import { FontAwesome } from '@expo/vector-icons'; 
+import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
 import Travel from '../../assets/Travel.png';
 import CancelledFlight from '../../assets/CancelledFlight.png';
-import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
 
 export default class Home extends Component {
   
