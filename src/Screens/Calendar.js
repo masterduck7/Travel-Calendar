@@ -22,7 +22,7 @@ export default class CalendarTravel extends Component {
       super(props);
       this.state = {
         tripsData : [],
-        formatedTrips: [],
+        formatedTrips: {},
         // Actual Trip to show details
         // Destination, Start date, End date, Airline, Reservation code
         actualTrip: {
