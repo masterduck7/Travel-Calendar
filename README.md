@@ -2,11 +2,11 @@
 
 Mobile APP developed with React Native.
 
-You can add trips or not business days to the calendar.
+- You can add trips or not business days to the calendar.
 
-Then you can check the calendar to see the days without trips and therefore available.
+- Then you can check the calendar to see the days without trips and therefore available.
 
-Google ADMob implemented
+- Google ADMob implemented
 
 ## Execution
 
