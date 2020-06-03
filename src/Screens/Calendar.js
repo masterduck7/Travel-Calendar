@@ -6,6 +6,10 @@ import { Button, Card } from 'react-native-elements'
 import { Ionicons } from '@expo/vector-icons';
 import moment from 'moment';
 import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
+import { AdMobBanner } from 'expo-ads-admob';
+
+const testAD = "ca-app-pub-3940256099942544/2934735716"
+const officialAD = "ca-app-pub-1681130123322106/7747749733"
 
 LocaleConfig.locales['es'] = {
   monthNames: ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Juilio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'],
@@ -260,114 +264,130 @@ export default class CalendarTravel extends Component {
       this.setState({ modalNonWorkingDay: false })
     }
 
+    bannerError = () => {
+      console.log('Banner ad not loading')
+    }
+    bannerAdReceived = () => {
+      console.log('Banner ad received')
+    }
+
     render(){
       return(
-        <View>
-        {/* Modal Remove Trip */}
-        <Modal
-        visible={this.state.modalRemove}
-        transparent={true}
-        animationType = {"slide"}
-        onRequestClose={() => this.setState({ modalRemove: false })}>
-        <View style = {styles.modal}>  
-          <Card containerStyle={{width: wp("90%"), borderRadius: wp("7%"), borderWidth: 1 }}
-              title={<Text style={{textAlign:'center', paddingBottom: hp("2%"), fontSize: wp("5%")}}>¿Desea eliminar el viaje seleccionado?</Text>}>
-              <Text style={{marginBottom: hp("1%")}}>DESTINO: {this.state.actualTrip.destination}</Text>
-              <Text style={{marginBottom: hp("1%")}}>INICIO: {moment(this.state.actualTrip.start_date).format("DD/MM/YY")} , {this.state.actualTrip.startTime}</Text>
-              <Text style={{marginBottom: hp("1%")}}>TERMINO: {moment(this.state.actualTrip.end_date).format("DD/MM/YY")} , {this.state.actualTrip.endTime}</Text>
-              <ScrollView horizontal={false}>
-                <View style={styles.buttonContainer}>
-                <Button title="SI" buttonStyle={{ ...styles.buttonConfirm, backgroundColor:'#ED8C72', borderColor: '#ED8C72' }} 
-                onPress = {() => {this.removeActualTrip()}}/>
-                <Button title="NO" buttonStyle={{ ...styles.buttonConfirm }} onPress = {() => {  
-                  this.setState({ modalRemove: false })}}/>
-                </View>
-              </ScrollView>
-            </Card>
-        </View>
-        </Modal>
-        {/* Modal Details Non Working Day */}
-        <Modal
-        visible={this.state.modalNonWorkingDay}
-        transparent={true}
-        animationType = {"slide"}
-        onRequestClose={() => this.setState({ modalNonWorkingDay: false })}>
-        <View style = {styles.modal}>  
-            <Card containerStyle={{width: wp("90%"), borderRadius: wp("7%"), borderWidth: 1 }}
-              title={<Text style={{textAlign:'center', paddingBottom: hp("2%"), fontSize: wp("5%")}}>Día no laboral !!!</Text>}>
-              <Text style={{ fontSize: wp("5%"), textAlign:'center', marginBottom: hp("1%")}}>{moment(this.state.actualTrip.start_date).format("DD/MM/YY")}</Text>
-              <ScrollView horizontal={false}>
-                <View style={styles.buttonContainer}>
-                <Button title="ELIMINAR" buttonStyle={{ ...styles.buttonConfirm, backgroundColor:'#ED8C72', borderColor: '#ED8C72' }} 
-                onPress = {() => {this.removeNonWorkingDay()}}/>
-                <Button title="CANCELAR" buttonStyle={styles.buttonConfirm} onPress = {() => {  
-                  this.setState({ modalNonWorkingDay: false })}}/>
-                </View>
-              </ScrollView>
-            </Card>
-        </View>
-        </Modal>
-        {/* Modal Details Trip */}
-        <Modal            
-            animationType = {"slide"}  
-            transparent = {true}  
-            visible = {this.state.modalDetail} 
-            onRequestClose={() => this.setState({ modalDetail: false })} 
-        >  
+        <View style={{flex: 1}}>
+          <View style={{flex: 1}} >
+          {/* Modal Remove Trip */}
+          <Modal
+          visible={this.state.modalRemove}
+          transparent={true}
+          animationType = {"slide"}
+          onRequestClose={() => this.setState({ modalRemove: false })}>
           <View style = {styles.modal}>  
-            <Card containerStyle={{width: wp("90%"), borderRadius: wp("5%"), borderWidth: 1 }}
-              title={<Text style={{textAlign:'center', paddingBottom: hp("2%"), fontSize: wp("5%")}}>{this.state.actualTrip.destination}</Text>}>
-              <Text style={{marginBottom: hp("1%")}}>INICIO: {moment(this.state.actualTrip.start_date).format("DD/MM/YY")} , {this.state.actualTrip.startTime}</Text>
-              <Text style={{marginBottom: hp("1%")}}>TERMINO: {moment(this.state.actualTrip.end_date).format("DD/MM/YY")} , {this.state.actualTrip.endTime}</Text>
-              <Text style={{marginBottom: hp("1%")}}>AEROLÍNEA: {this.state.actualTrip.airline}</Text>
-              <ScrollView horizontal={false}>
-              <View  style={styles.textButtonContainer}>
-              <Text style={{marginBottom: hp("1%")}}>RESERVA: {this.state.actualTrip.reservationCode}</Text>
-              <Ionicons name="md-copy" size={wp("6%")} color="gray" style={{marginLeft: wp("2%")}} 
-              onPress={() => {
-                Clipboard.setString(this.state.actualTrip.reservationCode)
-                ToastAndroid.show("Código de reserva copiado", ToastAndroid.SHORT);
-              }}/>
-              </View>
-              </ScrollView>
-              <Button
-                onPress={() => Linking.openURL(this.state.actualAirline)}
-                buttonStyle={{backgroundColor:'#2988BC', borderColor: '#2988BC', borderRadius: wp("5%"), borderWidth: 1}}
-                title='IR A RESERVA' />
-              <ScrollView horizontal={false}>
-              <View style={styles.buttonContainer}>
-              <Button title="ELIMINAR" buttonStyle= {{...styles.buttonConfirm, backgroundColor:'#ED8C72', borderColor: '#ED8C72' }} 
-              onPress = {() => this.setState({modalRemove: true, modalDetail: false}) }/>
-              <Button title="CERRAR" buttonStyle={styles.buttonConfirm} onPress = {() => {  
-                this.setState({ modalDetail:!this.state.modalDetail})}}/>
-              </View>
-              </ScrollView>
-            </Card>
-          </View>  
-        </Modal>
-        <CalendarList
-            horizontal={true}
-            pagingEnabled={true}
-            firstDay={1}
-            onDayPress={(day) => {this.showData(day)}}
-            markedDates={this.state.formatedTrips}
-            markingType={'period'}
-            style={{
-              height: hp("100%")
-            }}
-            theme={{
-              'stylesheet.day.period': {
-                base: {
-                  overflow: 'hidden',
-                  height: 34,
-                  alignItems: 'center',
-                  width: 38,
-                }
-              },
-              todayTextColor: '#2988BC',
-              textMonthFontWeight: 'bold',
-            }}
-        />
+            <Card containerStyle={{width: wp("90%"), borderRadius: wp("7%"), borderWidth: 1 }}
+                title={<Text style={{textAlign:'center', paddingBottom: hp("2%"), fontSize: wp("5%")}}>¿Desea eliminar el viaje seleccionado?</Text>}>
+                <Text style={{marginBottom: hp("1%")}}>DESTINO: {this.state.actualTrip.destination}</Text>
+                <Text style={{marginBottom: hp("1%")}}>INICIO: {moment(this.state.actualTrip.start_date).format("DD/MM/YY")} , {this.state.actualTrip.startTime}</Text>
+                <Text style={{marginBottom: hp("1%")}}>TERMINO: {moment(this.state.actualTrip.end_date).format("DD/MM/YY")} , {this.state.actualTrip.endTime}</Text>
+                <ScrollView horizontal={false}>
+                  <View style={styles.buttonContainer}>
+                  <Button title="SI" buttonStyle={{ ...styles.buttonConfirm, backgroundColor:'#ED8C72', borderColor: '#ED8C72' }} 
+                  onPress = {() => {this.removeActualTrip()}}/>
+                  <Button title="NO" buttonStyle={{ ...styles.buttonConfirm }} onPress = {() => {  
+                    this.setState({ modalRemove: false })}}/>
+                  </View>
+                </ScrollView>
+              </Card>
+          </View>
+          </Modal>
+          {/* Modal Details Non Working Day */}
+          <Modal
+          visible={this.state.modalNonWorkingDay}
+          transparent={true}
+          animationType = {"slide"}
+          onRequestClose={() => this.setState({ modalNonWorkingDay: false })}>
+          <View style = {styles.modal}>  
+              <Card containerStyle={{width: wp("90%"), borderRadius: wp("7%"), borderWidth: 1 }}
+                title={<Text style={{textAlign:'center', paddingBottom: hp("2%"), fontSize: wp("5%")}}>Día no laboral !!!</Text>}>
+                <Text style={{ fontSize: wp("5%"), textAlign:'center', marginBottom: hp("1%")}}>{moment(this.state.actualTrip.start_date).format("DD/MM/YY")}</Text>
+                <ScrollView horizontal={false}>
+                  <View style={styles.buttonContainer}>
+                  <Button title="ELIMINAR" buttonStyle={{ ...styles.buttonConfirm, backgroundColor:'#ED8C72', borderColor: '#ED8C72' }} 
+                  onPress = {() => {this.removeNonWorkingDay()}}/>
+                  <Button title="CANCELAR" buttonStyle={styles.buttonConfirm} onPress = {() => {  
+                    this.setState({ modalNonWorkingDay: false })}}/>
+                  </View>
+                </ScrollView>
+              </Card>
+          </View>
+          </Modal>
+          {/* Modal Details Trip */}
+          <Modal            
+              animationType = {"slide"}  
+              transparent = {true}  
+              visible = {this.state.modalDetail} 
+              onRequestClose={() => this.setState({ modalDetail: false })} 
+          >  
+            <View style = {styles.modal}>  
+              <Card containerStyle={{width: wp("90%"), borderRadius: wp("5%"), borderWidth: 1 }}
+                title={<Text style={{textAlign:'center', paddingBottom: hp("2%"), fontSize: wp("5%")}}>{this.state.actualTrip.destination}</Text>}>
+                <Text style={{marginBottom: hp("1%")}}>INICIO: {moment(this.state.actualTrip.start_date).format("DD/MM/YY")} , {this.state.actualTrip.startTime}</Text>
+                <Text style={{marginBottom: hp("1%")}}>TERMINO: {moment(this.state.actualTrip.end_date).format("DD/MM/YY")} , {this.state.actualTrip.endTime}</Text>
+                <Text style={{marginBottom: hp("1%")}}>AEROLÍNEA: {this.state.actualTrip.airline}</Text>
+                <ScrollView horizontal={false}>
+                <View  style={styles.textButtonContainer}>
+                <Text style={{marginBottom: hp("1%")}}>RESERVA: {this.state.actualTrip.reservationCode}</Text>
+                <Ionicons name="md-copy" size={wp("6%")} color="gray" style={{marginLeft: wp("2%")}} 
+                onPress={() => {
+                  Clipboard.setString(this.state.actualTrip.reservationCode)
+                  ToastAndroid.show("Código de reserva copiado", ToastAndroid.SHORT);
+                }}/>
+                </View>
+                </ScrollView>
+                <Button
+                  onPress={() => Linking.openURL(this.state.actualAirline)}
+                  buttonStyle={{backgroundColor:'#2988BC', borderColor: '#2988BC', borderRadius: wp("5%"), borderWidth: 1}}
+                  title='IR A RESERVA' />
+                <ScrollView horizontal={false}>
+                <View style={styles.buttonContainer}>
+                <Button title="ELIMINAR" buttonStyle= {{...styles.buttonConfirm, backgroundColor:'#ED8C72', borderColor: '#ED8C72' }} 
+                onPress = {() => this.setState({modalRemove: true, modalDetail: false}) }/>
+                <Button title="CERRAR" buttonStyle={styles.buttonConfirm} onPress = {() => {  
+                  this.setState({ modalDetail:!this.state.modalDetail})}}/>
+                </View>
+                </ScrollView>
+              </Card>
+            </View>  
+          </Modal>
+          <CalendarList
+              horizontal={true}
+              pagingEnabled={true}
+              firstDay={1}
+              onDayPress={(day) => {this.showData(day)}}
+              markedDates={this.state.formatedTrips}
+              markingType={'period'}
+              style={{
+                height: hp("100%")
+              }}
+              theme={{
+                'stylesheet.day.period': {
+                  base: {
+                    overflow: 'hidden',
+                    height: 34,
+                    alignItems: 'center',
+                    width: 38,
+                  }
+                },
+                todayTextColor: '#2988BC',
+                textMonthFontWeight: 'bold',
+              }}
+          />
+          </View>
+          <View>
+            <AdMobBanner style={styles.bannerAd}
+              bannerSize="fullBanner"
+              adUnitID={officialAD}
+              onDidFailToReceiveAdWithError={this.bannerError}
+              onAdViewDidReceiveAd = {this.bannerAdReceived} />
+            </View>
         </View>
       );
     }
@@ -378,7 +398,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center', 
     borderColor: '#fff',    
-    marginTop: hp("55%"),
+    marginTop: hp("50%"),
     width: wp('95%'),
     margin: wp("2%")
   },
@@ -403,5 +423,10 @@ const styles = StyleSheet.create({
     left: wp("1%"),
     height: '75%',
     alignSelf: 'center'
+  },
+  bannerAd: {
+    position: "absolute",
+    width: wp("100%"),
+    top: hp("-7%")
   }
 });

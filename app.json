@@ -25,7 +25,10 @@
       "supportsTablet": true
     },
     "android": {
-      "package": "com.lpsoftware.travel_calendar"
+      "package": "com.lpsoftware.travel_calendar",
+      "config": {
+        "googleMobileAdsAppId": "ca-app-pub-1681130123322106~8130893115"
+      }
     }
   }
 }
