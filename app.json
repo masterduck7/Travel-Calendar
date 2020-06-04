@@ -26,6 +26,17 @@
     },
     "android": {
       "package": "com.lpsoftware.travel_calendar",
+      "permissions": [
+        "MANAGE_DOCUMENTS",
+        "READ_EXTERNAL_STORAGE",
+        "WAKE_LOCK",
+        "WRITE_EXTERNAL_STORAGE",
+        "com.android.launcher.permission.INSTALL_SHORTCUT",
+        "com.google.android.c2dm.permission.RECEIVE",
+        "com.google.android.gms.permission.ACTIVITY_RECOGNITION",
+        "com.google.android.providers.gsf.permission.READ_GSERVICES",
+        "com.htc.launcher.permission.UPDATE_SHORTCUT"
+      ],
       "config": {
         "googleMobileAdsAppId": "ca-app-pub-1681130123322106~8130893115"
       }
