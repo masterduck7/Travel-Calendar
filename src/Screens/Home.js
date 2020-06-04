@@ -54,7 +54,7 @@ export default class Home extends Component {
         </Modal>
 
         <Text style={{color: '#888', fontSize: wp("10%"), top: hp("10%") }}>Travel Calendar</Text>
-        <Image source={Travel} resizeMethod="resize" resizeMode="stretch" style={{top: hp("15%")}} /> 
+        <Image source={Travel} resizeMethod="resize" resizeMode="contain" style={{ width: wp("70%"), height: "20%" , top: hp("15%")}} /> 
         <TouchableOpacity
           onPress={() => this.props.navigation.navigate('Calendar')}
           style={styles.button}>
@@ -92,7 +92,7 @@ export default class Home extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#F4EADE',
+    backgroundColor: '#FFFFFF',
     alignItems: 'center',
     justifyContent: 'center'
   },
@@ -111,7 +111,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center', 
     borderColor: '#fff',    
-    marginTop: hp("55%"),
+    marginTop: hp("50%"),
     width: wp('95%'),
     margin: wp("2%")
   },

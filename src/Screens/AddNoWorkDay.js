@@ -108,7 +108,7 @@ export default class AddNoWorkDay extends Component{
 
 const styles = StyleSheet.create({
     container: {
-        backgroundColor: '#F4EADE',
+        backgroundColor: '#FFFFFF',
         flex: 1,
         flexDirection: 'row',
         justifyContent: 'space-between',
