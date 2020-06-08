@@ -12,7 +12,7 @@ const testAD = "ca-app-pub-3940256099942544/2934735716"
 const officialAD = "ca-app-pub-1681130123322106/7747749733"
 
 LocaleConfig.locales['es'] = {
-  monthNames: ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Juilio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'],
+  monthNames: ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'],
   monthNamesShort: ['Ene','Feb','Mar','Abr','May','Jun','Jul','Ago','Sep','Oct','Nov','Dec'],
   dayNames: ['Domingo','Lunes','Martes','Miercoles','Jueves','Viernes','Sabado'],
   dayNamesShort: ['Dom','Lun','Mar','Mie','Jue','Vie','Sab'],
