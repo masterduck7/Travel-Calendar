@@ -8,6 +8,12 @@ Mobile APP developed with React Native.
 
 - Google ADMob implemented
 
+## Images
+
+Application                |  Google Play Store
+:-------------------------:|:-------------------------:
+<img src="https://user-images.githubusercontent.com/15709240/84680303-72da6e80-af00-11ea-8191-7fb56a7f7b8d.png" width="550" height="auto">  |  <img src="https://user-images.githubusercontent.com/15709240/84680317-779f2280-af00-11ea-9ff1-b3ff6e202d3c.jpeg" width="150" height="auto">
+
 ## Execution
 
 ### Requirements
