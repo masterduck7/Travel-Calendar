@@ -6,13 +6,13 @@ Mobile APP developed with React Native.
 
 - Then you can check the calendar to see the days without trips and therefore available.
 
-- Google ADMob implemented
+- Google ADMob implemented [DEPRECATED IN NEW VERSION]
 
 ## Images
 
-Application                |  Google Play Store
-:-------------------------:|:-------------------------:
-<img src="https://user-images.githubusercontent.com/15709240/84680303-72da6e80-af00-11ea-8191-7fb56a7f7b8d.png" width="550" height="auto">  |  <img src="https://user-images.githubusercontent.com/15709240/84680317-779f2280-af00-11ea-9ff1-b3ff6e202d3c.jpeg" width="150" height="auto">
+|                                                                Application                                                                 |                                                              Google Play Store                                                              |
+| :----------------------------------------------------------------------------------------------------------------------------------------: | :-----------------------------------------------------------------------------------------------------------------------------------------: |
+| <img src="https://user-images.githubusercontent.com/15709240/84680303-72da6e80-af00-11ea-8191-7fb56a7f7b8d.png" width="550" height="auto"> | <img src="https://user-images.githubusercontent.com/15709240/84680317-779f2280-af00-11ea-9ff1-b3ff6e202d3c.jpeg" width="150" height="auto"> |
 
 ## Execution
 
@@ -30,3 +30,8 @@ Application                |  Google Play Store
 - Run react app: npm start
 - Connect android device to computer
 - Open Expo APP and run
+
+### Build
+
+- eas build --platform android
+- Go to https://expo.dev/

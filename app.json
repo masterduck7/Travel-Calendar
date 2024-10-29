@@ -1,41 +1,55 @@
 {
-  "expo": {
-    "name": "Travel Calendar",
-    "slug": "travelcalendar",
-    "platforms": [
-      "ios",
-      "android",
-      "web"
-    ],
-    "version": "1.4.2",
-    "orientation": "portrait",
-    "icon": "./assets/icon.png",
-    "splash": {
-      "image": "./assets/splash.png",
-      "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
-    },
-    "updates": {
-      "fallbackToCacheTimeout": 0
-    },
-    "assetBundlePatterns": [
-      "**/*"
-    ],
-    "ios": {
-      "supportsTablet": true
-    },
-    "android": {
-      "versionCode": 3,
-      "package": "com.lpsoftware.travel_calendar",
-      "permissions": [
-        "MANAGE_DOCUMENTS",
-        "READ_EXTERNAL_STORAGE",
-        "WAKE_LOCK",
-        "WRITE_EXTERNAL_STORAGE"
-      ],
-      "config": {
-        "googleMobileAdsAppId": "ca-app-pub-1681130123322106~8130893115"
-      }
-    }
-  }
+	"expo": {
+		"name": "Travel Calendar",
+		"slug": "travelcalendar",
+		"platforms": ["ios", "android", "web"],
+		"version": "1.4.3",
+		"orientation": "portrait",
+		"icon": "./assets/icon.png",
+		"splash": {
+			"image": "./assets/splash.png",
+			"resizeMode": "contain",
+			"backgroundColor": "#ffffff"
+		},
+		"updates": {
+			"fallbackToCacheTimeout": 0
+		},
+		"assetBundlePatterns": ["**/*"],
+		"ios": {
+			"supportsTablet": true
+		},
+		"android": {
+			"versionCode": 4,
+			"package": "com.lpsoftware.travel_calendar",
+			"permissions": [
+				"MANAGE_DOCUMENTS",
+				"READ_EXTERNAL_STORAGE",
+				"WAKE_LOCK",
+				"WRITE_EXTERNAL_STORAGE"
+			],
+			"config": {
+				"googleMobileAdsAppId": "ca-app-pub-1681130123322106~8130893115"
+			}
+		},
+		"extra": {
+			"eas": {
+				"projectId": "0b3fa65b-5288-4883-993a-e8b67a7fd2b2"
+			}
+		},
+		"plugins": [
+			[
+				"expo-build-properties",
+				{
+					"android": {
+						"compileSdkVersion": 34,
+						"targetSdkVersion": 34,
+						"buildToolsVersion": "34.0.0"
+					},
+					"ios": {
+						"deploymentTarget": "13.4"
+					}
+				}
+			]
+		]
+	}
 }
